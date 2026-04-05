@@ -295,6 +295,46 @@
     font-weight: 600;
   }
 
+  /* MINDMAP */
+  .mindmap-wrap {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mindmap-wrap svg {
+    max-width: 100%;
+    height: auto;
+  }
+  .mm-legend {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+  .mm-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  .mm-legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
   /* MOBILE */
   @media (max-width: 700px) {
     .layout { flex-direction: column; }
@@ -1360,11 +1400,11 @@ function renderMain() {
     <div class="tabs">
       <button class="tab-btn ${tab === 'kartya' ? 'active' : ''}" onclick="switchTab('kartya')">📇 Tanulókártyák (${tetel.kartya.length})</button>
       <button class="tab-btn ${tab === 'fogalom' ? 'active' : ''}" onclick="switchTab('fogalom')">📖 Fogalomgyűjtemény (${tetel.fogalmak.length})</button>
+      <button class="tab-btn ${tab === 'mindmap' ? 'active' : ''}" onclick="switchTab('mindmap')">🗺️ Mindmap</button>
     </div>
   `;
 
-  if (tab === 'kartya') {
-    html += '<div class="cards-grid">';
+  if (tab === 'kartya') {    html += '<div class="cards-grid">';
     tetel.kartya.forEach((item, idx) => {
       const id = `card-${tetel.id}-${idx}`;
       const flipped = flippedCards.has(id) ? ' flipped' : '';
@@ -1397,6 +1437,8 @@ function renderMain() {
       `;
     });
     html += '</div>';
+  } else if (tab === 'mindmap') {
+    html += renderMindmap(tetel.id);
   }
 
   main.innerHTML = html;
@@ -1405,6 +1447,412 @@ function renderMain() {
 function switchTab(tab) {
   document.getElementById('nezet').value = tab;
   renderMain();
+}
+
+// ===================== MINDMAP DATA =====================
+const mindmapok = {
+  1: {
+    center: "Pedagógia & Nevelés",
+    color: "#2d6a4f",
+    branches: [
+      { label: "Pedagógia fogalma", color: "#e76f51", children: ["Nevelés tudománya", "Nevelés gyakorlata", "Törvényszerűségek vizsgálata"] },
+      { label: "Pedagógia céljai", color: "#f4a261", children: ["Testi fejlesztés", "Szellemi fejlesztés", "Erkölcsi nevelés", "Esztétikai nevelés"] },
+      { label: "Pedagógia területei", color: "#2a9d8f", children: ["Didaktika", "Neveléselmélet", "Gyógypedagógia", "Óvodapedagógia", "Összehasonlító ped."] },
+      { label: "Nevelés fogalma", color: "#457b9d", children: ["Szándékos", "Céltudatos", "Tervszerű", "Értékközvetítés"] },
+      { label: "Nevelési módszerek", color: "#9b5de5", children: ["Meggyőzés", "Szoktatás", "Példamutatás", "Jutalmazás", "Büntetés", "Követelés"] },
+    ]
+  },
+  2: {
+    center: "Szocializáció & Nevelés színterei",
+    color: "#457b9d",
+    branches: [
+      { label: "Szocializáció", color: "#e76f51", children: ["Normák átvétele", "Értékek elsajátítása", "Szerepek tanulása", "Primer & szekunder"] },
+      { label: "Família", color: "#f4a261", children: ["Első kötődések", "Alapértékek", "Nevelési stílus", "Szerepátörökítés"] },
+      { label: "Óvoda", color: "#2a9d8f", children: ["Első intézmény", "Szabálykövetés", "Kortárs kapcsolatok", "Iskolaérettség előkészítése"] },
+      { label: "Iskola", color: "#457b9d", children: ["Tudás átadása", "Normarendszer", "Teljesítményértékelés", "Latens funkciók"] },
+      { label: "Kortárscsoport", color: "#9b5de5", children: ["Serdülőkorban kiemelkedő", "Identitástámasz", "Egyenrangú kapcsolatok"] },
+    ]
+  },
+  3: {
+    center: "Oktatás & Tanítás-tanulás",
+    color: "#2a9d8f",
+    branches: [
+      { label: "Oktatás fogalma", color: "#e76f51", children: ["Tudatos folyamat", "Tervszerű", "Intézményes", "Kétirányú"] },
+      { label: "Oktatás célja", color: "#f4a261", children: ["Tudás átadása", "Képességfejlesztés", "Személyiségformálás", "Beilleszkedés segítése"] },
+      { label: "Tanítás-tanulás folyamata", color: "#2a9d8f", children: ["Motiválás", "Új anyag feldolgozása", "Rögzítés", "Alkalmazás", "Értékelés"] },
+      { label: "Tanulás fajtái", color: "#457b9d", children: ["Kondicionálás", "Szociális tanulás", "Belátásos tanulás", "Memorizálás"] },
+      { label: "Fontos elvek", color: "#9b5de5", children: ["Aktív tanulás", "Visszacsatolás", "Differenciálás", "Vygotsky ZPD", "Motiváció"] },
+    ]
+  },
+  4: {
+    center: "Oktatás módszerei & munkaformái",
+    color: "#e76f51",
+    branches: [
+      { label: "Oktatási módszerek", color: "#e76f51", children: ["Magyarázat", "Szemléltetés", "Megbeszélés", "Vita", "Projekt", "Gyakorlás"] },
+      { label: "Módszer megválasztása", color: "#f4a261", children: ["Életkor", "Tananyag jellege", "Rendelkezésre álló idő", "Csoport összetétele", "Didaktikai cél"] },
+      { label: "Szervezeti keretek", color: "#2a9d8f", children: ["Tanítási óra típusai", "Kirándulás", "Szakkör", "Projekt hét"] },
+      { label: "Munkaformák", color: "#457b9d", children: ["Frontális", "Egyéni", "Páros", "Csoportos"] },
+      { label: "Kooperatív elvek", color: "#9b5de5", children: ["Pozitív egymásrautaltság", "Egyéni felelősség", "Közvetlen interakció", "Szociális készségek"] },
+    ]
+  },
+  5: {
+    center: "SNI & Inklúzió",
+    color: "#9b5de5",
+    branches: [
+      { label: "SNI fogalma", color: "#e76f51", children: ["Érzékszervi fogyatékosság", "Értelmi akadályozottság", "Mozgáskorlátozottság", "Autizmus", "Egyéb pszichés zavar"] },
+      { label: "Különleges bánásmód", color: "#f4a261", children: ["SNI tanulók", "BTMN tanulók", "Tehetséges tanulók"] },
+      { label: "Integrációs formák", color: "#2a9d8f", children: ["Integráció", "Inklúzió", "Szegregáció"] },
+      { label: "Integráció vs Inklúzió", color: "#457b9d", children: ["Integráció: fizikai jelenlét", "Inklúzió: rendszer alkalmazkodik", "Inklúzió = teljes befogadás"] },
+      { label: "Asszisztens feladatai", color: "#9b5de5", children: ["Egyéni segítség", "Higiénés támogatás", "Önkiszolgálás fejlesztése", "Együttműködés gy.ped-gal", "Kompetenciahatár betartása"] },
+    ]
+  },
+  6: {
+    center: "Pszichológia fogalma & módszerei",
+    color: "#f4a261",
+    branches: [
+      { label: "Pszichológia fogalma", color: "#e76f51", children: ["Lelki jelenségek tudománya", "Viselkedés vizsgálata", "Gondolkodás, érzelmek"] },
+      { label: "Pszichológia területei", color: "#f4a261", children: ["Általános", "Fejlődéspszichológia", "Szociálpszichológia", "Klinikai", "Neveléspszichológia"] },
+      { label: "Kutatási módszerek", color: "#2a9d8f", children: ["Megfigyelés", "Kísérlet", "Interjú", "Kérdőív", "Esetleírás", "Teszt"] },
+      { label: "Irányzatok", color: "#457b9d", children: ["Behaviorizmus", "Kognitív pszichológia", "Humanisztikus", "Pszichoanalízis"] },
+      { label: "Etika", color: "#9b5de5", children: ["Beleegyezés", "Nem ártás elve", "Titoktartás", "Önkéntesség"] },
+    ]
+  },
+  7: {
+    center: "Személyiség fogalma & fejlődése",
+    color: "#2d6a4f",
+    branches: [
+      { label: "Személyiség fogalma", color: "#e76f51", children: ["Egyedi pszichikus rendszer", "Viszonylag állandó", "Gondolkodás + érzelem + viselkedés"] },
+      { label: "Fejlődést befolyásoló tényezők", color: "#f4a261", children: ["Öröklés (gének)", "Környezet", "Kölcsönhatás", "Saját aktivitás"] },
+      { label: "Elméletek", color: "#2a9d8f", children: ["Biológiai determinizmus", "Környezeti determinizmus", "Konvergencia elmélet", "Interakcionista felfogás"] },
+      { label: "Személyiség összetevői", color: "#457b9d", children: ["Temperamentum (veleszületett)", "Karakter (tanult)", "Képességek", "Értékek, attitűdök"] },
+      { label: "Fontos fogalmak", color: "#9b5de5", children: ["Önértékelés", "Reziliencia", "Kritikus periódus", "Erikson fejlődési krízisek"] },
+    ]
+  },
+  8: {
+    center: "Érés, tanulás, szükségletek",
+    color: "#457b9d",
+    branches: [
+      { label: "Érés fogalma", color: "#e76f51", children: ["Genetikailag programozott", "Belső folyamat", "Nem igényel tanulást", "Iskolaérettség alapja"] },
+      { label: "Tanulás fajtái", color: "#f4a261", children: ["Klasszikus kondicionálás (Pavlov)", "Operáns kondicionálás (Skinner)", "Szociális tanulás (Bandura)", "Belátásos tanulás"] },
+      { label: "Maslow szükségletek", color: "#2a9d8f", children: ["Fiziológiai", "Biztonság", "Szeretet & tartozás", "Megbecsülés", "Önmegvalósítás"] },
+      { label: "Motiváció", color: "#457b9d", children: ["Belső motiváció", "Külső motiváció", "Motívum fogalma"] },
+      { label: "Kölcsönhatás", color: "#9b5de5", children: ["Érés lehetővé teszi a tanulást", "Nevelés hat az érésre", "Szükségletek meghatározzák a motivációt"] },
+    ]
+  },
+  9: {
+    center: "Fejlődéslélektan & Kötődés",
+    color: "#e76f51",
+    branches: [
+      { label: "Fejlődéslélektan", color: "#e76f51", children: ["Fogantatástól öregkorig", "Érzelmi fejlődés", "Kognitív fejlődés", "Szociális fejlődés"] },
+      { label: "Kötődés (Bowlby)", color: "#f4a261", children: ["Erős érzelmi kötelék", "Gondozóhoz kötődés", "Érzékeny időszak 0-12 hó", "Belső munkamodell"] },
+      { label: "Kötődési stílusok (Ainsworth)", color: "#2a9d8f", children: ["Biztonságos", "Elkerülő", "Szorongó-ambivalens", "Dezorganizált"] },
+      { label: "Kísérletek", color: "#457b9d", children: ["Harlow-kísérlet (majmok)", "Idegen helyzet kísérlet", "Spitz-hospitalizáció"] },
+      { label: "Hosszú távú hatás", color: "#9b5de5", children: ["Felnőttkori kapcsolatok", "Önértékelés", "Stresszkezelés", "Reziliencia"] },
+    ]
+  },
+  10: {
+    center: "Újszülött, csecsemő, kisgyermekkor",
+    color: "#2a9d8f",
+    branches: [
+      { label: "Fejlődés törvényszerűségei", color: "#e76f51", children: ["Folytonos", "Egyenlőtlen", "Individuális", "Egyirányú"] },
+      { label: "Újszülöttkor (0-4 hét)", color: "#f4a261", children: ["Alkalmazkodás", "Veleszületett reflexek", "Alvás dominanciája", "Alapérzékelés"] },
+      { label: "Csecsemőkor (0-1 év)", color: "#2a9d8f", children: ["Gyors növekedés", "Motoros fejlődés", "Kötődés kialakulása", "Tárgyállandóság (9 hó)"] },
+      { label: "Kisgyermekkor (1-3 év)", color: "#457b9d", children: ["Önállóság igénye", "Anyanyelv elsajátítása", "Szimbolikus játék", "Dackorszak"] },
+      { label: "Motoros fejlődés sorrendje", color: "#9b5de5", children: ["Fejemelés → fordulás", "Ülés (6 hó)", "Mászás (8 hó)", "Járás (12-15 hó)"] },
+    ]
+  },
+  11: {
+    center: "Óvodás, kisiskolás, serdülőkor",
+    color: "#9b5de5",
+    branches: [
+      { label: "Óvodáskor (3-6 év)", color: "#e76f51", children: ["Játék vezető tevékenység", "Fantázia virágkora", "Szabálytudat kialakulása", "Iskolaérettség előkészítése"] },
+      { label: "Kisiskoláskor (6-10 év)", color: "#f4a261", children: ["Konkrét műveleti gondolkodás", "Szorgalom vs. kisebbrendűség", "Kortársak fontossága nő", "Logikus következtetés"] },
+      { label: "Serdülőkor (10-18 év)", color: "#2a9d8f", children: ["Pubertás", "Identitáskeresés", "Kortárscsoport dominanciája", "Formális műveleti gondolkodás"] },
+      { label: "Piaget szakaszai", color: "#457b9d", children: ["Szenzomotoros (0-2)", "Preoperatív (2-7)", "Konkrét műveleti (7-11)", "Formális műveleti (12+)"] },
+      { label: "Serdülőkor sajátosságai", color: "#9b5de5", children: ["Érzelmi labilitás", "Rizikomagatartás", "Lázadás", "Absztrakt gondolkodás"] },
+    ]
+  },
+  12: {
+    center: "Megismerő funkciók fejlődése",
+    color: "#f4a261",
+    branches: [
+      { label: "Megismerő funkciók", color: "#e76f51", children: ["Érzékelés", "Észlelés", "Figyelem", "Emlékezet", "Képzelet", "Gondolkodás"] },
+      { label: "Figyelem fejlődése", color: "#f4a261", children: ["Önkéntelen → szándékos", "Újszülött: reflexszerű", "Óvodás: 10-15 perc", "Kisiskolás: 20-30 perc"] },
+      { label: "Emlékezet fejlődése", color: "#2a9d8f", children: ["Rövid távú memória", "Hosszú távú memória", "Deklaratív vs. procedurális", "Infantilis amnézia"] },
+      { label: "Piaget gondolkodás szakaszai", color: "#457b9d", children: ["Szenzomotoros", "Preoperatív (egocentrizmus)", "Konkrét műveleti (konzerváció)", "Formális műveleti"] },
+      { label: "Képzelet fejlődése", color: "#9b5de5", children: ["2 évtől: szimbolikus játék", "Óvodás: fantázia & valóság keveredik", "Kisiskolás: realisztikusabb"] },
+    ]
+  },
+  13: {
+    center: "Szociálpszichológia alapfogalmai",
+    color: "#2d6a4f",
+    branches: [
+      { label: "Szociálpszichológia", color: "#e76f51", children: ["Mások hatása az egyénre", "Csoportdinamika", "Attitűdök vizsgálata"] },
+      { label: "Csoport", color: "#f4a261", children: ["Elsődleges (família)", "Másodlagos (iskola)", "Kohézió", "Csoportnormák"] },
+      { label: "Szerep & Státusz", color: "#2a9d8f", children: ["Szerep: elvárt viselkedés", "Státusz: rang a csoportban", "Egymást erősítik"] },
+      { label: "Előítélet & Sztereotípia", color: "#457b9d", children: ["Sztereotípia: kognitív általánosítás", "Előítélet: érzelmileg negatív", "Diszkrimináció: cselekvésben", "Csökkentés módjai"] },
+      { label: "Deviancia & Konformitás", color: "#9b5de5", children: ["Deviancia: normától eltérés", "Pozitív deviancia", "Konformitás: alkalmazkodás", "Bystander effektus"] },
+    ]
+  },
+  14: {
+    center: "Nevelési stílusok & Attitűd",
+    color: "#457b9d",
+    branches: [
+      { label: "Nevelési stílusok", color: "#e76f51", children: ["Autoritárius (sok kontroll, kevés melegség)", "Demokratikus (kontroll + melegség)", "Permisszív (kevés kontroll, sok melegség)"] },
+      { label: "Nevelői attitűd formái", color: "#f4a261", children: ["Elfogadó-demokratikus", "Elutasító-autoriter", "Közömbös-elhanyagoló", "Túlvédő-engedékeny"] },
+      { label: "Szociometria", color: "#2a9d8f", children: ["Moreno módszere", "Szociogram = grafikus ábra", "Kérdőíves felmérés"] },
+      { label: "Szociometriai típusok", color: "#457b9d", children: ["Csillag (sok pozitív szavazat)", "Peremhelyzetű", "Elutasított (izolált)"] },
+      { label: "Bullying vs. konfliktus", color: "#9b5de5", children: ["Bullying: ismétlődő, szándékos", "Hatalmi egyenlőtlenség", "Azonnali beavatkozás szükséges"] },
+    ]
+  },
+  15: {
+    center: "Gyógypedagógia & Tankötelezettség",
+    color: "#e76f51",
+    branches: [
+      { label: "Gyógypedagógia fogalma", color: "#e76f51", children: ["Akadályozott fejlődésűek nevelése", "Speciális pedagógia", "Interdiszciplináris tudomány"] },
+      { label: "Gyógypedagógia célja", color: "#f4a261", children: ["Optimális fejlesztés", "Önállóság maximalizálása", "Társadalmi beilleszkedés", "Normalizáció elve"] },
+      { label: "Kulcsfogalmak", color: "#2a9d8f", children: ["Különleges bánásmód", "BTMN", "SNI 'A' és 'B'", "BTM"] },
+      { label: "Oktatási formák", color: "#457b9d", children: ["Integráció", "Inklúzió", "Szegregáció", "Fejlesztő nevelés-oktatás"] },
+      { label: "Tankötelezettség", color: "#9b5de5", children: ["SNI-s tanulók is kötelesek", "Speciális intézmény", "Integrált forma", "Fejlesztő nevelés"] },
+    ]
+  },
+  16: {
+    center: "Szakértői Bizottság & Korai fejlesztés",
+    color: "#2a9d8f",
+    branches: [
+      { label: "Szakértői Bizottság tagjai", color: "#e76f51", children: ["Gyógypedagógus (vezető)", "Pszichológus", "Orvos/szakorvos", "Logopédus (esetenként)"] },
+      { label: "Vizsgálat menete", color: "#f4a261", children: ["Anamnézis felvétele", "Pszichológiai vizsgálat", "Gyógypedagógiai vizsgálat", "Komplex értékelés", "Szülőkkel megbeszélés"] },
+      { label: "Szakértői vélemény tartalma", color: "#2a9d8f", children: ["Fogyatékosság megállapítása", "Oktatási forma javaslata", "Szükséges fejlesztések", "Segédeszközök"] },
+      { label: "Korai fejlesztés", color: "#457b9d", children: ["0-5 éves kor", "Neurológiai plaszticitás", "Ambuláns / otthoni / intézményes", "Szülők bevonása"] },
+      { label: "Korai fejlesztés tartalma", color: "#9b5de5", children: ["Gyógypedagógiai fejlesztés", "Logopédia", "Pszichológiai gondozás", "Gyógytorna", "Szülőtámogatás"] },
+    ]
+  },
+  17: {
+    center: "Tanulásban akadályozottság",
+    color: "#9b5de5",
+    branches: [
+      { label: "Fogalma & okai", color: "#e76f51", children: ["Enyhe intellektuális károsodás", "Organikus okok", "Környezeti okok", "Funkcionális okok"] },
+      { label: "Tünetek", color: "#f4a261", children: ["Gyenge érzékelés", "Rövid figyelem", "Emlékezeti problémák", "Lassú tanulási tempó", "Korlátozott absztrakció"] },
+      { label: "Nevelési elvek", color: "#2a9d8f", children: ["Fokozott szemléletesség", "Kisebb lépések", "Sok ismétlés", "Azonnali megerősítés", "Praktikus tartalmak"] },
+      { label: "Iskoláztatás", color: "#457b9d", children: ["Enyhe értelmi fogyatékosok iskolája", "Integrált osztály", "Fejlesztő nevelés"] },
+      { label: "Önálló életvitel", color: "#9b5de5", children: ["Önellátás lehetséges", "Egyszerű munkavégzés", "Támogatott életvitel", "Védett foglalkoztatás"] },
+    ]
+  },
+  18: {
+    center: "Értelmi akadályozottság",
+    color: "#f4a261",
+    branches: [
+      { label: "Fogalma & fokozatok", color: "#e76f51", children: ["Középsúlyos (IQ 35-50)", "Súlyos (IQ 20-35)", "Mélysúlyos (IQ <20)", "Adaptív viselkedés korlátozott"] },
+      { label: "Okai", color: "#f4a261", children: ["Down-szindróma (21-es triszómia)", "Agykárosodás", "Anyagcserebetegségek", "PKU", "Genetikai okok"] },
+      { label: "Nevelési jellemzők", color: "#2a9d8f", children: ["Egyéni szükségletekre épített", "Cselekvéses tanulás", "Fejlesztő nevelés-oktatás", "AAK eszközök"] },
+      { label: "Speciális gondozás", color: "#457b9d", children: ["Személyes higiénia", "Étkezés segítése", "Gyógyszerelés", "Inkontinencia kezelése", "Pozicionálás"] },
+      { label: "Kommunikáció", color: "#9b5de5", children: ["Rövid mondatok", "Képes kommunikáció", "AAK rendszerek", "Türelem & ismétlés"] },
+    ]
+  },
+  19: {
+    center: "Látássérülés",
+    color: "#2d6a4f",
+    branches: [
+      { label: "Csoportok", color: "#e76f51", children: ["Gyengénlátók (0.1-0.3)", "Aliglátók (0.01-0.1)", "Vakok (0.01 alatt)", "Látó típus vs. tapintó-halló típus"] },
+      { label: "Okai", color: "#f4a261", children: ["Veleszületett (genetika)", "Szerzett (baleset, betegség)", "Glaukóma, retinopátia", "Szürke hályog"] },
+      { label: "Speciális eszközök", color: "#2a9d8f", children: ["Braille-írás", "Nagy hatrekeszes doboz", "Braille-írógép", "Fehér bot", "Vakvezető kutya", "Képernyőolvasó"] },
+      { label: "Fejlődési sajátosságok", color: "#457b9d", children: ["Lassabb mozgásfejlődés", "Lereagáló mozgás", "Verbalizmus", "Jó verbális képességek"] },
+      { label: "Önkiszolgálás & Higiénia", color: "#9b5de5", children: ["Tapintásos visszajelzés", "Támpontrendszerű közlekedés", "Speciális higiéniás segédeszközök"] },
+    ]
+  },
+  20: {
+    center: "Hallássérülés",
+    color: "#457b9d",
+    branches: [
+      { label: "Csoportok", color: "#e76f51", children: ["Nagyothallók", "Süketek", "Prelingvális sérülés", "Posztlingvális sérülés"] },
+      { label: "Okai", color: "#f4a261", children: ["Örökletes", "Intrauterin fertőzés (rubeola)", "Szülési komplikáció", "Meningitis", "Zaj"] },
+      { label: "Kommunikáció", color: "#2a9d8f", children: ["Jelnyelv (önálló nyelv)", "Szájról olvasás", "Bilinguális megközelítés", "Vizuális jelzések"] },
+      { label: "Segédeszközök", color: "#457b9d", children: ["Hallókészülék", "Cochleáris implantátum", "Fülhigiénia fontos!"] },
+      { label: "Személyiségfejlődés & Gondozás", color: "#9b5de5", children: ["Kommunikációs frusztráció", "Süket kultúra identitás", "Fülhigiénia", "Vizuális figyelemfelhívás"] },
+    ]
+  },
+  21: {
+    center: "Mozgáskorlátozottság",
+    color: "#e76f51",
+    branches: [
+      { label: "Fogalma & okai", color: "#e76f51", children: ["Mozgásszervek károsodása", "Veleszületett (agybénulás)", "Szerzett (baleset)", "Degeneratív betegségek"] },
+      { label: "Típusok", color: "#f4a261", children: ["Agybénulás (cerebrális parézis)", "Spasztikus", "Athetoid", "Végtagredukció", "Petyhüdt bénulás"] },
+      { label: "Speciális eszközök", color: "#2a9d8f", children: ["Tolókocsi", "Járókeret", "Protézis & ortézis", "Speciális íróeszközök", "Számítógépes segédeszközök"] },
+      { label: "Nevelési sajátosságok", color: "#457b9d", children: ["Lassabb tempó", "Akadálymentesítés", "Önállóság maximalizálása", "Pető-módszer"] },
+      { label: "Gondozás", color: "#9b5de5", children: ["Pozicionálás", "Nyomásfekély megelőzése", "Gyógyszerelés", "Fizikoterápia támogatása"] },
+    ]
+  },
+  22: {
+    center: "Beszédfogyatékosság",
+    color: "#2a9d8f",
+    branches: [
+      { label: "Típusok", color: "#e76f51", children: ["Dadogás", "Hadarás", "Pöszeség", "Afázia", "Mutizmus", "Hangképzési zavar"] },
+      { label: "Okai", color: "#f4a261", children: ["Organikus (agysérülés)", "Halláscsökkenés", "Funkcionális (pszichés)", "Szájüreg rendellenesség"] },
+      { label: "Logopédia", color: "#2a9d8f", children: ["Prevenció", "Diagnosztizálás", "Terápia", "Speciális eszközök (tükör, hangolók)"] },
+      { label: "Higiénés feladatok", color: "#457b9d", children: ["Eszközök sterilizálása", "Kézhigiénia", "Nyálvédelem", "Protokoll betartása"] },
+      { label: "Személyiséghatás & Segítség", color: "#9b5de5", children: ["Szorongás, szégyen", "Alacsony önértékelés", "Türelmes kommunikáció", "Nem fejezzük be helyette"] },
+    ]
+  },
+  23: {
+    center: "Autizmus spektrumzavar",
+    color: "#9b5de5",
+    branches: [
+      { label: "Diagnózis kritériumai", color: "#e76f51", children: ["Szociális kommunikáció nehézsége", "Korlátozott repetitív viselkedés", "Mindkettő szükséges"] },
+      { label: "Pszichológiai háttér", color: "#f4a261", children: ["Naiv tudatelmélet (Theory of Mind)", "Végrehajtó működési zavar", "Gyenge centrális koherencia"] },
+      { label: "Protetikus környezet", color: "#2a9d8f", children: ["Kiszámítható struktúra", "Képes napirend", "Tér strukturálása", "Vizuális támogatás", "PECS"] },
+      { label: "Érzékszervi sajátosságok", color: "#457b9d", children: ["Hipervag érzékelés", "Hiposzenzitivitás", "Zaj túlérzékenység", "Tapintás problémák"] },
+      { label: "Oktatás & Kommunikáció", color: "#9b5de5", children: ["ABA terápia", "Rövid, konkrét mondatok", "Rutinok fontossága", "ASZ-specifikus iskola"] },
+    ]
+  },
+  24: {
+    center: "Diszlexia, Diszgráfia, Diszkalkulia",
+    color: "#f4a261",
+    branches: [
+      { label: "Diszlexia", color: "#e76f51", children: ["Specifikus olvasási nehézség", "Normál intelligencia mellett", "Betű-hang megfeleltetés zavara", "Fonetikai feldolgozás zavara"] },
+      { label: "Diszgráfia & Diszkalkulia", color: "#f4a261", children: ["Diszgráfia: írászavar", "Diszkalkulia: számolási zavar", "Mindkettő neurológiai alapú", "Mindkettő specifikus"] },
+      { label: "Meixner-módszer", color: "#2a9d8f", children: ["Hangonkénti tanítás", "Játékos-mesés keret", "Homogén gátlás csökkentése", "Hármas asszociáció elve"] },
+      { label: "Fejlesztés elvei", color: "#457b9d", children: ["Prevenció óvodáskorban", "Reedukáció terápia", "Multiszenzoros megközelítés", "Sikerélmények biztosítása"] },
+      { label: "Törvényi jogok", color: "#9b5de5", children: ["Időkedvezmény", "Szóbeli felelet elfogadása", "Segédeszközök", "Értékelési könnyítések"] },
+    ]
+  },
+  25: {
+    center: "Súlyos-halmozott fogyatékosság",
+    color: "#2d6a4f",
+    branches: [
+      { label: "Fogalma & okai", color: "#e76f51", children: ["2+ fogyatékosság egyszerre", "Genetikai okok", "Agykárosodás", "Metabolikus betegségek"] },
+      { label: "Fejlesztő nevelés területei", color: "#f4a261", children: ["Kommunikáció", "Mozgás", "Érzékelés-észlelés", "Kreativitás", "Önkiszolgálás"] },
+      { label: "Fejlesztő gondozás", color: "#2a9d8f", children: ["Ürítés segítése", "Tisztálkodás", "Öltözés-vetkőzés", "Étkezés segítése", "Pozicionálás"] },
+      { label: "Alapelvek", color: "#457b9d", children: ["Holisztikus szemlélet", "Egyénre szabottság", "Familia bevonása", "Méltóság tisztelete", "Interdiszciplináris csapat"] },
+      { label: "Speciális módszerek", color: "#9b5de5", children: ["Szenzoros stimuláció", "Snoezelen terápia", "Basale stimuláció", "Zene terápia"] },
+    ]
+  },
+  26: {
+    center: "ADHD – Aktivitás és figyelem zavarai",
+    color: "#e76f51",
+    branches: [
+      { label: "ADHD típusai", color: "#e76f51", children: ["Figyelemzavar típus (ADD)", "Hiperaktív-impulzív típus", "Kombinált típus (leggyakoribb)"] },
+      { label: "Három fő tünet", color: "#f4a261", children: ["Hiperaktivitás (nem tud ülni)", "Figyelemzavar (hamar elterelődik)", "Impulzivitás (előbb cselekszik)"] },
+      { label: "Neurológiai háttér", color: "#2a9d8f", children: ["Prefrontális kéreg eltérése", "Dopaminerg rendszer zavara", "Genetikailag meghatározott", "Végrehajtó funkciók gyengesége"] },
+      { label: "Nevelési stratégiák", color: "#457b9d", children: ["Következetes struktúra", "Rövid feladatok", "Azonnali visszajelzés", "Pozitív megerősítés", "Sok mozgás"] },
+      { label: "Iskolai segítség", color: "#9b5de5", children: ["Első sor, tanár közelében", "Egyéni fejlesztési terv", "Időkedvezmény", "Vizuális tervező", "Gyógyszerelés (orvos dönt)"] },
+    ]
+  }
+};
+
+// ===================== MINDMAP RENDERER =====================
+function renderMindmap(tetelId) {
+  const data = mindmapok[tetelId];
+  if (!data) return '<div class="empty-state">Mindmap nem elérhető ehhez a tételhez.</div>';
+
+  const W = 900, H = 620;
+  const cx = W / 2, cy = H / 2;
+  const branchCount = data.branches.length;
+  const branchRadius = 190;
+  const childRadius = 90;
+
+  let svgLines = '';
+  let svgNodes = '';
+
+  // Center node
+  svgNodes += `
+    <ellipse cx="${cx}" cy="${cy}" rx="80" ry="44" fill="${data.color}" filter="url(#shadow)"/>
+    <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="12" font-weight="bold" font-family="DM Sans, sans-serif">
+      ${wrapText(data.center, 16)}
+    </text>
+  `;
+
+  data.branches.forEach((branch, bi) => {
+    const angle = (2 * Math.PI * bi / branchCount) - Math.PI / 2;
+    const bx = cx + branchRadius * Math.cos(angle);
+    const by = cy + branchRadius * Math.sin(angle);
+
+    // Line from center to branch
+    svgLines += `<line x1="${cx}" y1="${cy}" x2="${bx}" y2="${by}" stroke="${branch.color}" stroke-width="3" stroke-opacity="0.6"/>`;
+
+    // Branch node
+    const bLabel = branch.label;
+    const bLines = splitLabel(bLabel, 14);
+    const bH = Math.max(36, bLines.length * 16 + 12);
+    const bW = 110;
+
+    svgNodes += `
+      <rect x="${bx - bW/2}" y="${by - bH/2}" width="${bW}" height="${bH}" rx="10" fill="${branch.color}" filter="url(#shadow)"/>
+    `;
+    bLines.forEach((line, li) => {
+      const yOff = (li - (bLines.length - 1) / 2) * 16;
+      svgNodes += `<text x="${bx}" y="${by + yOff}" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="10" font-weight="600" font-family="DM Sans, sans-serif">${line}</text>`;
+    });
+
+    // Children
+    branch.children.forEach((child, ci) => {
+      const childCount = branch.children.length;
+      const spreadAngle = Math.min(Math.PI * 0.7, childCount * 0.35);
+      const startAngle = angle - spreadAngle / 2;
+      const childAngle = startAngle + (spreadAngle / Math.max(childCount - 1, 1)) * ci;
+      const finalAngle = childCount === 1 ? angle : childAngle;
+      const chx = bx + childRadius * Math.cos(finalAngle);
+      const chy = by + childRadius * Math.sin(finalAngle);
+
+      svgLines += `<line x1="${bx}" y1="${by}" x2="${chx}" y2="${chy}" stroke="${branch.color}" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="4,3"/>`;
+
+      const cLines = splitLabel(child, 12);
+      const cH = Math.max(28, cLines.length * 14 + 8);
+      const cW = 95;
+
+      svgNodes += `
+        <rect x="${chx - cW/2}" y="${chy - cH/2}" width="${cW}" height="${cH}" rx="8" fill="${branch.color}" fill-opacity="0.18" stroke="${branch.color}" stroke-width="1.5"/>
+      `;
+      cLines.forEach((line, li) => {
+        const yOff = (li - (cLines.length - 1) / 2) * 14;
+        svgNodes += `<text x="${chx}" y="${chy + yOff}" text-anchor="middle" dominant-baseline="middle" fill="${branch.color}" font-size="9" font-weight="600" font-family="DM Sans, sans-serif">${line}</text>`;
+      });
+    });
+  });
+
+  const svg = `
+    <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;min-height:480px;">
+      <defs>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.18)"/>
+        </filter>
+      </defs>
+      <rect width="${W}" height="${H}" fill="#fafaf7" rx="12"/>
+      ${svgLines}
+      ${svgNodes}
+    </svg>
+  `;
+
+  // Legend
+  let legend = '<div class="mm-legend">';
+  data.branches.forEach(b => {
+    legend += `<div class="mm-legend-item"><div class="mm-legend-dot" style="background:${b.color}"></div><span>${b.label}</span></div>`;
+  });
+  legend += '</div>';
+
+  return `<div class="mindmap-wrap">${svg}</div>${legend}`;
+}
+
+function splitLabel(text, maxLen) {
+  if (text.length <= maxLen) return [text];
+  const words = text.split(' ');
+  const lines = [];
+  let current = '';
+  words.forEach(word => {
+    if ((current + ' ' + word).trim().length <= maxLen) {
+      current = (current + ' ' + word).trim();
+    } else {
+      if (current) lines.push(current);
+      current = word;
+    }
+  });
+  if (current) lines.push(current);
+  return lines.slice(0, 3);
+}
+
+function wrapText(text, maxLen) {
+  const lines = splitLabel(text, maxLen);
+  if (lines.length === 1) return `<tspan x="${450}" dy="0">${lines[0]}</tspan>`;
+  return lines.map((l, i) => `<tspan x="450" dy="${i === 0 ? -(lines.length - 1) * 7 : 14}">${l}</tspan>`).join('');
 }
 
 function flipCard(id) {
