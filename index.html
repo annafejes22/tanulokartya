@@ -131,6 +131,165 @@
     margin-top: 1px;
   }
 
+  .home-item {
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .fejezet-header {
+    padding: 0.7rem 1rem 0.5rem;
+    cursor: pointer;
+    background: var(--tag-bg);
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    font-family: 'Fraunces', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    transition: background 0.15s;
+  }
+  .fejezet-header:hover { background: #ddeee6; }
+  .fejezet-header.active { background: var(--accent); color: #fff; }
+  .fejezet-header .fejezet-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(45,106,79,0.15);
+    border-radius: 10px;
+    padding: 0.1rem 0.5rem;
+    flex-shrink: 0;
+  }
+  .fejezet-header.active .fejezet-count { background: rgba(255,255,255,0.25); }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .breadcrumb-link {
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .breadcrumb-link:hover { text-decoration: underline; }
+  .breadcrumb-sep { opacity: 0.5; }
+
+  /* FEJEZET ÁTTEKINTŐ LISTA (tételek a kártyák előtt) */
+  .fejezet-meta-bar {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+  .fejezet-tetel-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .fejezet-tetel-item {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .fejezet-tetel-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .fejezet-tetel-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.3rem;
+  }
+  .fejezet-tetel-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .fejezet-tetel-meta {
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+  .fejezet-tetel-cim {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .fejezet-tetel-szoveg {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+  .fejezet-tetel-cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* FŐOLDAL - FEJEZET KÁRTYÁK */
+  .fejezet-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+  .fejezet-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem 1.3rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .fejezet-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .fejezet-card-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent2);
+    opacity: 0.6;
+    margin-bottom: 0.3rem;
+  }
+  .fejezet-card-nev {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .fejezet-card-leiras {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--text-light);
+    margin-bottom: 0.8rem;
+  }
+  .fejezet-card-meta {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
   .main {
     flex: 1;
     padding: 1.5rem;
@@ -264,6 +423,29 @@
   .card-back .card-hint { color: rgba(245,240,232,0.5); }
   .card-back .card-hint::before { content: '↕'; }
 
+  /* TELJES LEÍRÁS (folyamatos, szóban elmondható felelet) */
+  .teljes-leiras-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 1.6rem 1.8rem;
+    box-shadow: var(--shadow);
+    max-width: 780px;
+  }
+  .teljes-leiras-card p {
+    font-size: 0.96rem;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 1.1rem;
+  }
+  .teljes-leiras-card p:last-child { margin-bottom: 0; }
+  .teljes-leiras-card p:first-of-type::first-letter {
+    font-family: 'Fraunces', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
   /* FOGALOMGYŰJTEMÉNY */
   .fogalmak-grid {
     display: grid;
@@ -391,6 +573,11 @@
       padding: 0.5rem 0.8rem;
       font-size: 0.8rem;
     }
+    .fejezet-header { padding: 0.55rem 0.8rem 0.4rem; font-size: 0.78rem; }
+    .fejezet-tetel-item { padding: 0.8rem 0.9rem; }
+    .fejezet-tetel-cim { font-size: 0.95rem; }
+    .fejezet-tetel-szoveg { font-size: 0.82rem; }
+    .fejezet-card-grid { grid-template-columns: 1fr; }
 
     .main {
       padding: 1rem 0.8rem;
@@ -484,13 +671,14 @@
 
 <div class="controls">
   <label>Tétel:</label>
-  <select id="tetelSelect" onchange="selectTetel(this.value)">
-    <option value="all">– Összes tétel –</option>
+  <select id="tetelSelect" onchange="onSelectChange(this.value)">
+    <option value="home">– Főoldal –</option>
   </select>
   <label>Nézet:</label>
   <select id="nezet" onchange="renderMain()">
-    <option value="kartya">Tanulókártyák</option>
+    <option value="teljes">Teljes leírás</option>
     <option value="fogalom">Fogalomgyűjtemény</option>
+    <option value="kartya">Tanulókártyák</option>
     <option value="mindmap">Mindmap</option>
   </select>
 </div>
@@ -501,7 +689,7 @@
 
 <div class="layout">
   <nav class="sidebar">
-    <h2>Tételek</h2>
+    <h2>Fejezetek &amp; tételek</h2>
     <div id="sidebarList"></div>
   </nav>
   <main class="main" id="mainContent"></main>
@@ -515,6 +703,15 @@ const tetelek = [
     id: 1,
     cim: "Pedagógia fogalma, nevelés módszerei",
     tetelSzoveg: "Ismertesse a pedagógia fogalmát, célját, tárgyát, feladatát, sorolja fel a pedagógia területeit! Határozza meg a nevelés fogalmát, mutassa be a nevelés módszereit!",
+    teljesLeiras: `A pedagógia kettős értelmű fogalom: egyrészt a nevelés tudománya, vagyis a neveléstudomány, másrészt maga a nevelési gyakorlat. Tárgya a nevelés, vagyis az a szándékos, tervszerű és intézményes folyamat, amelynek során a felnőtt generáció átadja tudását, értékeit és normáit a fiatalabb generációnak. Célja a gyermek sokoldalú, harmonikus személyiségfejlesztése – testi, szellemi, erkölcsi és esztétikai területen egyaránt.
+
+A pedagógia feladatai négy pontban foglalhatók össze: leírja a nevelési folyamatokat, feltárja azok törvényszerűségeit, meghatározza a nevelés céljait és elveit, valamint módszereket és eszközöket dolgoz ki ezek megvalósításához. A pedagógiának több területe van: ide tartozik a didaktika, vagyis az oktatáselmélet, a neveléselmélet, az iskolapedagógia, a gyógypedagógia, az óvodapedagógia, a felsőoktatás-pedagógia és az összehasonlító pedagógia is.
+
+A nevelés maga szándékos, céltudatos és tervszerű tevékenység, amellyel a pedagógus a tanuló személyiségét formálja: értékeket, normákat és viselkedési mintákat közvetít. Fontos megkülönböztetni a formális nevelést, amely intézményes keretek között, iskolában vagy óvodában zajlik, az informális neveléstől, amely nem intézményes, hanem életszerű helyzetekben, például a famíliában vagy a baráti körben valósul meg. Az oktatás és a nevelés szorosan összefonódik: az oktatás az ismeretek átadása, a nevelés a személyiség formálása, de a kettő elválaszthatatlan, hiszen minden jó oktatás nevel is, és minden nevelés egyúttal oktat is.
+
+A nevelés módszerei azok az eljárások és eszközök, amelyekkel a nevelő a kitűzött nevelési célt el kívánja érni. A meggyőzés módszerénél a nevelő szóban, példával vagy érveléssel hat a gyermek gondolkodására és érzelmeire, hogy benne helyes meggyőződés alakuljon ki – ide tartozik a magyarázat, az elbeszélés és a vita is. A szoktatás ismétléssel és gyakorlással alakítja ki a kívánt szokásokat és magatartásformákat, például a köszönést vagy a rendszeretetet. A jutalmazás megerősíti a helyes viselkedést és növeli a motivációt, lehet szóbeli dicséret, jegy vagy kitüntetés, de mindig arányosnak kell lennie a teljesítményhez. A büntetést csak akkor alkalmazzuk, ha a helytelen viselkedés más módszerrel nem változtatható meg, és soha nem lehet testi vagy megalázó jellegű, mindig következetesnek és igazságosnak kell lennie. Nagyon fontos eszköz a személyes példamutatás is, hiszen a gyermekek elsősorban utánzással tanulnak, így a pedagógus saját viselkedése az egyik legerősebb nevelő hatás. Végül a követelés módszerénél a nevelő egyértelmű, teljesíthető és életkornak megfelelő elvárásokat fogalmaz meg, amely akkor hatékony, ha következetes és érthető.
+
+Összefoglalva tehát a pedagógia a nevelés elméletét és gyakorlatát egyaránt magában foglaló tudomány, amely különböző területekre tagolódik, a nevelés pedig egy tudatosan irányított, sokféle módszerrel megvalósuló folyamat, amelynek célja a gyermek harmonikus személyiségfejlődése.`,
     kartya: [
       { k: "Mi a pedagógia?", v: "A pedagógia kettős értelmű fogalom: egyrészt a nevelés tudománya (neveléstudomány), másrészt a nevelés gyakorlata. Vizsgálja a nevelés folyamatait, feltételeit és törvényszerűségeit." },
       { k: "Mi a pedagógia célja?", v: "A gyermek sokoldalú, harmonikus személyiségfejlesztése – testi, szellemi, erkölcsi és esztétikai területen egyaránt." },
@@ -552,6 +749,15 @@ const tetelek = [
     id: 2,
     cim: "Nevelés színterei – szocializáció",
     tetelSzoveg: "Mutassa be a nevelés színtereit! Jellemezze a család, az óvoda és az iskola szocializációban betöltött szerepét!",
+    teljesLeiras: `A szocializáció az a hosszú, egész életen át tartó folyamat, amelynek során az egyén megtanulja a társadalom normáit, értékeit, szerepeit és viselkedési mintáit, és ezáltal fokozatosan beilleszkedik a közösségbe. A szocializáció legfontosabb színterei a família, az óvoda, az iskola, a kortárscsoport, a média és a vallási közösségek, később pedig a munkahely is ide tartozik.
+
+A família a legfontosabb szocializációs színtér, hiszen itt alakulnak ki a gyermek első és legerősebb érzelmi kötődései. A família adja az alapértékeket, a szokásokat és a kommunikációs mintákat, és alapvetően meghatározza a kialakuló személyiséget. Ezt nevezzük primer szocializációnak: csecsemőkortól iskoláskorig elsősorban a família hatása érvényesül, a gyermek itt sajátítja el az érzelmi biztonság alapjait, és itt történik a szerepátörökítés is, vagyis hogy a gyermek megfigyeli a szülők viselkedését és szerepeit, és ezeket mintaként veszi át. A nevelési stílus döntő hatású: a demokratikus nevelés, amely önállóságot és határokat egyaránt biztosít, egészséges szocializációhoz vezet, az autoritárius nevelés félelmet és feltétlen engedelmességet, az elhanyagoló nevelés pedig bizonytalanságot és alacsony önértékelést eredményezhet.
+
+Iskoláskortól kezdve a szekunder szocializáció kerül előtérbe: ekkor az intézmények, elsősorban az óvoda és az iskola, valamint a kortársak szerepe nő meg. Az óvoda segíti az iskolaérettség kialakulását, fejleszti a figyelmet, a szociális készségeket, az önkiszolgálást és a szabálykövető magatartást, amelyek mind az iskolai tanulás alapjai. Az iskola nemcsak tanít, hanem úgynevezett latens, vagyis rejtett funkciókat is betölt: közvetetten normákat, hierarchiát és teljesítményorientációt is közvetít, anélkül, hogy ezt kimondaná. Az inkluzív iskola különösen fontos szerepet játszik abban, hogy a gyerekek megtanulják az elfogadást, az empátiát és a sokféleség értékét, hiszen befogadja a különböző képességű tanulókat is.
+
+Serdülőkorban a kortárscsoport szerepe különösen felerősödik: a kortársak visszajelzései és normái erősen hatnak az identitás alakulására, és a gyermek itt tanulja meg az egyenrangú kapcsolatok kezelését. A média is fontos szocializációs tényező, hiszen értékeket, szerepmodelleket és viselkedési mintákat közvetít, pozitív és negatív irányban egyaránt, ezért kritikus médiafogyasztásra van szükség.
+
+Mindezek alapján fontos kiemelni, hogy ha az iskola és a família értékei összhangban vannak, a nevelés hatékonysága sokszorosára nő, ellentmondás esetén viszont a gyermek bizonytalanná válhat. A szociális tanulás elmélete szerint, amelyet Bandura dolgozott ki, a gyerekek nemcsak közvetlen tapasztalat útján, hanem megfigyeléssel és utánzással is tanulnak társadalmi viselkedést, ami tovább erősíti a szocializációs színterek jelentőségét.`,
     kartya: [
       { k: "Mi a szocializáció?", v: "Az a folyamat, amely során az egyén megtanulja a társadalom normáit, értékeit, szerepeit és viselkedési mintáit – és beilleszkedik a közösségbe." },
       { k: "Melyek a szocializáció főbb színterei?", v: "Család, óvoda, iskola, kortárscsoport, média, vallási közösség, munkahely." },
@@ -587,6 +793,15 @@ const tetelek = [
     id: 3,
     cim: "Oktatás fogalma, tanítás-tanulás folyamata",
     tetelSzoveg: "Ismertesse az oktatás fogalmát, célját, valamint a tanítás-tanulás folyamatát!",
+    teljesLeiras: `Az oktatás tudatos, tervszerű és intézményes folyamat, amelynek során a pedagógus ismereteket, készségeket és képességeket közvetít a tanulóknak. Célja a tudás átadása, a képességek fejlesztése, a személyiség alakítása és a társadalomba való beilleszkedés elősegítése. Fontos alapelv, hogy az oktatás soha nem értéksemleges: minden tanítási tartalom egyben értékeket és normákat is közvetít, ezért oktatás és nevelés a gyakorlatban elválaszthatatlan egymástól.
+
+A tanítás-tanulás folyamata a tanár és a tanuló közötti kölcsönös, kétirányú folyamat: a tanár szervezi és irányítja a tanulást, a tanuló pedig aktívan feldolgozza az új ismereteket. Az oktatási folyamat jellemző fázisai a motiválás, a célkitűzés, az új anyag feldolgozása, a rögzítés és megszilárdítás, az alkalmazás, végül az értékelés és ellenőrzés. Ezt egy másik szemszögből úgy is leírhatjuk, mint az érzékelés, a megértés, az elvonatkoztatás és az alkalmazás egymásra épülő szakaszait, ami Herbart klasszikus fokozatrendszerének modern változata.
+
+A motiváció kulcsfontosságú: a belső motiváció, vagyis amikor a tanulót valódi érdeklődés hajtja, sokkal erősebb és tartósabb, mint a külső motiváció, például a jó jegy. Az aktív tanulás során a tanuló nem passzívan fogad be ismereteket, hanem maga fedezi fel az összefüggéseket, kérdez, alkot és kipróbál dolgokat, ami mélyebb és tartósabb tudást eredményez. Mivel az ismeretek egymásra épülnek, fontos a tananyag logikai sorrendje is: az új anyag csak akkor érthető igazán, ha az előző már megszilárdult, ezért célszerű a spirálisan haladó, egymásra épülő tananyag-feldolgozás.
+
+A visszacsatolás nélkülözhetetlen eleme a folyamatnak, hiszen e nélkül sem a tanár, sem a tanuló nem tudja, merre tart: az ellenőrzés segít azonosítani a hiányosságokat és korrigálni azokat. Itt érdemes megkülönböztetni a formáló értékelést, amely menet közben, a fejlődést segítve zajlik, az összegző értékeléstől, amely a folyamat végén, lezárásként történik, például vizsga vagy érdemjegy formájában.
+
+A hatékony oktatás figyelembe veszi a tanulók eltérő tempóját, stílusát és előismereteit, ezt nevezzük differenciálásnak, valamint Vigotszkij legközelebbi fejlődési zóna fogalmára épít, vagyis arra a területre, ahol a gyermek felnőtt vagy okosabb társ segítségével már képes teljesíteni, bár önállóan még nem menne neki. Sajátos nevelési igényű tanulóknál ezt egyéni fejlesztési terv rögzíti, amely pontosan meghatározza a fejlesztési célokat, a módszereket és a haladás ütemét. Összességében tehát az oktatás egy célzott, többlépcsős folyamat, amelyben a motiváció, a fokozatosság, a visszacsatolás és az egyéni különbségek figyelembevétele együtt biztosítja a hatékony tanulást.`,
     kartya: [
       { k: "Mi az oktatás?", v: "Az oktatás tudatos, tervszerű, intézményes folyamat, amelynek során a pedagógus ismereteket, készségeket és képességeket közvetít a tanulóknak." },
       { k: "Mi az oktatás célja?", v: "Tudás átadása, képességek fejlesztése, személyiség alakítása és a társadalomba való beilleszkedés elősegítése." },
@@ -622,6 +837,15 @@ const tetelek = [
     id: 4,
     cim: "Oktatás módszerei, szervezeti és munkaformái",
     tetelSzoveg: "Mutassa be az oktatás módszereit és az oktatási módszer kiválasztásának szempontjait! Jellemezze az oktatás szervezeti és munkaformáit!",
+    teljesLeiras: `Az oktatási módszer az a tudatos eljárás, amellyel a pedagógus és a tanuló közösen eléri a kitűzött oktatási célokat. A leggyakoribb módszerek közé tartozik a magyarázat, a szemléltetés, a gyakorlás, a megbeszélés, a vita, a projektmódszer, a felfedező és heurisztikus tanulás, a kooperatív módszerek, a szimuláció és az előadás.
+
+A szemléltetés képek, tárgyak, modellek, filmek vagy kísérletek bemutatásával teszi érzékletessé az ismeretet – ahogy mondani szokták, egy kép ezer szót ér. A megbeszélés irányított párbeszéd a tanár és a tanulók között, amelyben a tanár kérdésekkel vezeti a gondolkodást. A heurisztikus módszernél a tanár szintén kérdésekkel rávezeti a tanulót az önálló felfedezésre, így a tanuló maga jut el a következtetésre, ami mélyebb megértést eredményez. A projektmódszer során a tanulók egy valódi, komplex problémát oldanak meg önállóan vagy csoportban, ami fejleszti a kreativitást, a tervezést és a valós problémamegoldó képességet. A szimuláció valóságos szituációkat imitál tanítási céllal, például szerepjáték vagy szituációs gyakorlat formájában, ami különösen hasznos a gyógypedagógiai asszisztensi munkában is.
+
+Az oktatási módszer megválasztásának fontos szempontjai a tanulók életkora, a tananyag jellege, a rendelkezésre álló idő és eszközök, a csoport összetétele és a didaktikai cél. Nem minden módszer illik minden tartalomhoz: egy kísérlet jól illik a természettudományos tárgyakhoz, egy vita pedig az erkölcsi kérdésekhez, vagyis a módszert mindig a tartalomhoz kell igazítani.
+
+Az oktatás munkaformái a frontális, az egyéni, a páros és a csoportos munka, amelyeket a hatékony pedagógus rendszerint kombinál egy-egy órán belül. A frontális munkánál az egész osztály egyszerre, azonos tempóban halad, ez gyors az ismeretátadásban, de nem veszi figyelembe az egyéni különbségeket – akkor érdemes választani, ha sok információt kell gyorsan átadni, vagy egy teljesen új témát vezetünk be. Az egyéni munka önállóságra nevel és jól differenciálható, de elszigetelheti a tanulót, és nem fejleszti annyira a szociális készségeket. A páros munka fejleszti a kommunikációt és az együttműködést, a csoportmunka pedig a szociális készségeket, a munkamegosztást, a felelősségérzetet és a konfliktusmegoldást – ez utóbbi valósítja meg a kooperatív tanulást, amelynek alapelve a pozitív egymásrautaltság, az egyéni felelősség, a közvetlen interakció és a szociális készségek fejlesztése.
+
+Az oktatás szervezeti kerete jellemzően a tanítási óra, de ide tartozhat a kirándulás, a szakkör, a tanulmányi séta vagy a projekthét is. A tanítási óráknak több típusa van: új ismeretet feldolgozó óra, gyakorló óra, ismétlő-rendszerező óra, ellenőrző óra és vegyes típusú óra. A házi feladat szerepe az ismeretek megszilárdítása és a tanórák közötti kapcsolat biztosítása, amely fejleszti az önállóságot, de csak mértékkel alkalmazva, hogy ne okozzon túlterhelést.`,
     kartya: [
       { k: "Mi az oktatási módszer?", v: "Az oktatási módszer az a tudatos eljárás, amellyel a pedagógus és a tanuló közösen eléri a kitűzött oktatási célokat." },
       { k: "Milyen oktatási módszerek léteznek?", v: "Magyarázat, szemléltetés, gyakorlás, megbeszélés, vita, projekt, felfedező tanulás, kooperatív módszerek, szimuláció, előadás." },
@@ -657,6 +881,13 @@ const tetelek = [
     id: 5,
     cim: "Sajátos nevelési igény, inklúzió, integráció, szegregáció",
     tetelSzoveg: "Ismertesse a sajátos nevelési igény fogalmát, területeit! Értelmezze az inklúzió, integráció, szegregáció fogalmakat! Mutassa be a gyógypedagógiai segítő munkatárs SNI-s gyermekkel, tanulóval kapcsolatos feladatait!",
+    teljesLeiras: `A sajátos nevelési igény, röviden SNI, olyan állapot, amelynek következtében a gyermek a szokásosnál nagyobb mértékű és speciálisabb nevelési, oktatási és fejlesztési ellátást igényel. Az SNI fő kategóriái az érzékszervi fogyatékosság, tehát a látás- és hallássérülés, az értelmi akadályozottság, a mozgáskorlátozottság, az autizmus spektrumzavar, valamint az egyéb pszichés fejlődési zavarok, mint a diszlexia vagy az ADHD. Ettől meg kell különböztetni a BTMN fogalmát, vagyis a beilleszkedési, tanulási és magatartási nehézséget, amely nem fogyatékosság, de speciális pedagógiai segítséget igényel. Mindkét csoport a különleges bánásmódot igénylő tanulók közé tartozik, amelybe a kiemelkedően tehetséges tanulók is beletartoznak.
+
+Az SNI tényét a Szakértői Bizottság állapítja meg, és tesz javaslatot az ellátás formájára. Itt válik élessé a három alapfogalom megkülönböztetése. Az integráció azt jelenti, hogy az SNI-s tanulókat a nem SNI-s tanulókkal közös csoportban nevelik: a tanulók fizikailag egy helyen vannak, de a rendszer önmagában nem feltétlenül változik a gyermek köré. Az inklúzió ezen túlmutató szemlélet: nemcsak fizikailag, hanem tartalmilag is befogadja a közösség az SNI-s tanulót, vagyis a rendszer alakul a gyermek szükségleteihez, és mindenki egyenrangú tagja marad a csoportnak. A szegregáció esetén az SNI-s tanulókat külön, speciális intézményben nevelik – ez önmagában nem értékítélet, súlyosabb fogyatékosság esetén ugyanis valóban szükséges és indokolt megoldás lehet, hiszen ott speciálisan képzett szakemberek dolgoznak.
+
+A gyógypedagógiai segítő munkatárs számos területen nyújt segítséget az SNI-s gyermeknek: egyéni segítségnyújtást ad az órákon, támogatja a higiénés szokásokat és az önkiszolgálás fejlesztését, és szorosan együttműködik a gyógypedagógussal, a famíliával és más szakemberekkel. Munkáját mindig a gyógypedagógus irányítása alatt végzi: önállóan nem hozhat szakmai döntéseket, nem diagnosztizál és nem ír fejlesztési tervet – ezt nevezzük kompetenciahatárnak, amelynek tiszteletben tartása alapvető szakmai elvárás. Dolgozhat bölcsődében, integrált óvodában vagy iskolában, speciális intézményben, gyermekotthonban, illetve felnőtt fogyatékossággal élők ellátásában is.
+
+Munkájának alapelvei közé tartozik az empátia, a türelem, a következetesség, a diszkréció, a gyermek méltóságának tisztelete és a szakmai alázat. Az SNI-s gyermekkel való kommunikáció során türelmesen, egyértelműen, rövid mondatokban és sok visszajelzéssel kell eljárni, hiszen az érzelmi biztonság és a bizalom megteremtése alapvető feltétele a fejlődésnek. Az adaptáció, vagyis a tananyag, a módszerek és az értékelés módosítása a tanuló szükségleteihez, például hosszabb feladatmegoldási idő vagy speciális segédeszközök biztosítása, szintén a mindennapi munka része.`,
     kartya: [
       { k: "Mi a sajátos nevelési igény (SNI) fogalma?", v: "Az SNI olyan állapot, amelynek következtében a gyermek szokásosnál nagyobb mértékű és speciálisabb nevelési, oktatási, fejlesztési ellátást igényel." },
       { k: "Milyen SNI-kategóriák léteznek?", v: "1. Érzékszervi fogyatékosság (látás, hallás). 2. Értelmi akadályozottság. 3. Mozgáskorlátozottság. 4. Autizmus spektrum zavar. 5. Egyéb pszichés fejlődési zavar (diszlexia, ADHD stb.)." },
@@ -693,6 +924,15 @@ const tetelek = [
     id: 6,
     cim: "Pszichológia fogalma, módszerei",
     tetelSzoveg: "Mutassa be a pszichológia fogalmát, tárgyát, feladatát! Helyezze el a pszichológiát a tudományok rendszerében! Ismertesse a pszichológia vizsgálati és kutatási módszereit!",
+    teljesLeiras: `A pszichológia a lelki jelenségek, tehát a viselkedés, a gondolkodás, az érzelmek és a motivációk tudományos vizsgálatával foglalkozó diszciplína. Tárgya az emberi pszichikum egésze: a gondolkodás, az érzelem, az akarat, a motiváció, a figyelem, az észlelés, a személyiség és a viselkedés. A pszichológia számos területre tagolódik: van általános pszichológia, fejlődéspszichológia, személyiséglélektan, szociálpszichológia, klinikai pszichológia, neveléspszichológia és gyógypedagógiai pszichológia is.
+
+A pszichológia a tudományok rendszerében a természettudományok, vagyis a biológia és a neurológia, valamint a társadalomtudományok, vagyis a szociológia és a pedagógia határán helyezkedik el, hiszen mindkét területtel szorosan kapcsolódik: a biológiai alapok és a társas-kulturális hatások egyaránt formálják a lelki folyamatokat. A pszichológia négy fő feladata, hogy leírja a lelki jelenségeket, megmagyarázza azokat, megjósolja a viselkedést, és segítsen a változásban, például terápia vagy fejlesztés formájában.
+
+A pszichológia számos kutatási módszert alkalmaz. A megfigyelés során a kutató természetes körülmények között figyeli meg a viselkedést, anélkül hogy beavatkozna, célja a valóságos történések leírása. A kísérlet kontrollált körülmények között vizsgálja az ok-okozati összefüggéseket: változtatnak egy tényezőn, és megfigyelik a hatást. Az interjú személyes kérdezéses módszer, amellyel mélyebb, egyedi információkat gyűjtenek, lehet strukturált vagy kötetlen. A kérdőív előnye, hogy sok emberről gyorsan gyűjthető adat, hátránya viszont, hogy felszínes lehet, és a válaszok szubjektívek. Az esetleírás, vagyis a kazuisztika egyetlen személy részletes vizsgálata, mély megértést ad, de nem általánosítható – Freud klasszikus esetei jó példák erre. A pszichológiai teszt egy standardizált feladatsor, amely egy pszichés jellemzőt mér, például az intelligenciát vagy a szorongást. Az introspekció önmegfigyelés, vagyis a személy saját belső állapotait figyeli meg és írja le, korlátja viszont, hogy könnyen szubjektív és torzulhat. A kutatás lehet longitudinális, amikor ugyanazokat a személyeket éveken át követik nyomon, így a fejlődési folyamatok időbeli alakulása is megfigyelhető, vagy keresztmetszeti, amikor különböző életkorú embereket vizsgálnak egy időpontban – ez gyorsabb, de nem mutatja az egyéni fejlődési utat.
+
+Fontos kiemelni a pszichológiai kutatás etikai szabályait is: a vizsgált személyek beleegyezése szükséges, nem szabad ártani nekik, és az adatokat bizalmasan kell kezelni. A pszichológián belül több irányzat is kialakult: a behaviorista pszichológia, Pavlov, Watson és Skinner nevéhez köthetően, csak a megfigyelhető viselkedéssel foglalkozik, alapja az inger-válasz kapcsolat és a megerősítés. A kognitív pszichológia a gondolkodás, a memória, a figyelem és a problémamegoldás tudományos vizsgálatával foglalkozik, kulcskérdése, hogyan dolgozzuk fel az információt. A humanisztikus pszichológia, Maslow és Rogers nevéhez köthetően, szerint az ember alapvetően jó, és önmegvalósításra törekszik, középpontjában az egyén szabad akarata és méltósága áll.
+
+A pszichológia szorosan kapcsolódik a pedagógiához is: a neveléspszichológia azt vizsgálja, hogyan tanul és fejlődik a gyermek, mi motiválja, és hogyan kezelhetők a nevelési problémák, a gyógypedagógiai pszichológia pedig az akadályozott fejlődésű személyek lelki jellemzőit vizsgálja, ami segít megérteni viselkedésüket és szükségleteiket.`,
     kartya: [
       { k: "Mi a pszichológia fogalma?", v: "A pszichológia a lelki jelenségek (viselkedés, gondolkodás, érzelmek, motivációk) tudományos vizsgálatával foglalkozó diszciplína." },
       { k: "Mi a pszichológia tárgya?", v: "Az emberi pszichikum: gondolkodás, érzelem, akarat, motiváció, figyelem, észlelés, személyiség és viselkedés." },
@@ -728,6 +968,17 @@ const tetelek = [
     id: 7,
     cim: "Személyiség fogalma, fejlődése",
     tetelSzoveg: "Határozza meg a személyiség fogalmát, valamint a személyiség fejlődését befolyásoló tényezőket! Mutassa be az öröklött tulajdonságok, környezeti hatások személyiségfejlődésben betöltött szerepét!",
+    teljesLeiras: `A személyiség az egyén pszichikus sajátosságainak, tulajdonságainak, képességeinek, attitűdjeinek és értékeinek viszonylag állandó, egyedi rendszere, amely meghatározza a gondolkodását, az érzéseit és a viselkedését. A személyiség fejlődését négy fő tényező befolyásolja: az öröklés, vagyis a genetika, a környezet, ide tartozik a família, az iskola és a kultúra, ezek kölcsönhatása, valamint az egyén saját aktivitása is.
+
+Az öröklés és a környezet viszonyát több elmélet is megpróbálta leírni. A biológiai determinizmus szerint kizárólag az öröklés, vagyis a gének döntik el, hogy ki lesz valaki – ide tartoznak például a temperamentum vagy az intelligencia genetikai alapjai. Ezzel szemben a környezeti determinizmus, amelyet a behaviorizmus képvisel, azt állítja, hogy a személyiséget kizárólag a környezet, a tapasztalatok és a nevelés formálja. Galton konvergenciaelmélete szerint az öröklés és a környezet egymástól függetlenül hat a személyiségre, és hatásaik egyszerűen összeadódnak. A modern, interakcionista felfogás szerint azonban az öröklés és a környezet nem egyszerűen összeadódik, hanem kölcsönösen hat egymásra: a gének hatása is függ a környezettől, és fordítva.
+
+Fontos megkülönböztetni a temperamentumot, amely az egyén viszonylag állandó, veleszületett emocionális és reakciómintázata, például mennyire élénk, visszahúzódó vagy ingerlékeny valaki, a karaktertől, amely a személyiség tanult, nevelt összetevője, vagyis az erkölcsi értékek és jellemvonások, amelyek a nevelés és a tapasztalat során alakulnak ki.
+
+A família hatása a legerősebb a korai életszakaszban: az érzelmi kötődés, a nevelési stílus és a családi légkör alapvetően meghatározza az önértékelést, a bizalmat és az értékrendet. Maslow szükséglethierarchiája szerint a személyiség fejlődéséhez biztonságos, kielégített alapszükségletek kellenek, étel, biztonság, szeretet, megbecsülés, és csak ezek megléte esetén érhető el az önmegvalósítás. Az egészséges önértékelés alapja a pozitív élményeknek, a szeretetnek és a reális elvárásoknak; az alacsony önértékelés viszont gátolja a fejlődést.
+
+Az iskola is jelentősen hat a személyiségre: értékeli a teljesítményt, kialakítja a szociális szerepeket és a normarendszert, a pozitív élmény építi, a negatív viszont rombolja az önképet. Az intelligencia genetikai meghatározottsága nagyjából ötven-nyolcvan százalékos, de a környezeti feltételek, mint az iskolázás vagy az ingergazdag környezet, erősen befolyásolják a kibontakozását. Fontos a kritikus periódus fogalma is: a fejlődés során vannak olyan időablakok, amelyekben egy-egy készség vagy tulajdonság különösen könnyen alakul ki, mint például az anyanyelv elsajátítása vagy a kötődés.
+
+Erikson fejlődéselmélete szerint az ember egész életén át fejlődik, és minden életszakaszban egy-egy fejlődési krízissel néz szembe, ezek megoldása vezet egészséges személyiséghez. Freud személyiségstruktúrája szerint az Id, vagyis az ösztönök, az Ego, a reális én, és a Szuperego, az erkölcsi ítéletek hármasának egyensúlyától függ a személyiség. A reziliencia, vagyis a lelki rugalmasság az a képesség, amellyel nehézségek és traumák után is talpra tudunk állni és tovább tudunk fejlődni – ezt az erős kötődés és a pozitív énkép erősen segíti.`,
     kartya: [
       { k: "Mi a személyiség fogalma?", v: "A személyiség az egyén pszichikus sajátosságainak (tulajdonságok, képességek, attitűdök, értékek) viszonylag állandó, egyedi rendszere, amely meghatározza gondolkodását, érzéseit és viselkedését." },
       { k: "Melyek a személyiség fejlődését befolyásoló főbb tényezők?", v: "1. Öröklés (genetika). 2. Környezet (família, iskola, kultúra). 3. Kölcsönhatásuk (interakció). 4. Az egyén saját aktivitása." },
@@ -764,6 +1015,13 @@ const tetelek = [
     id: 8,
     cim: "Érés, tanulás, nevelés kölcsönhatása, szükségletek",
     tetelSzoveg: "Ismertesse az érés, a tanulás és a nevelés kölcsönhatását! Mutassa be az emberi szükségletek és motívumok rendszerét!",
+    teljesLeiras: `Az érés genetikailag programozott, belső fejlődési folyamat: az idegrendszer, az érzékszervek és a motoros rendszer biológiai megérése, amely nem igényel tanulást. A tanulás ezzel szemben pszichológiai értelemben tartós változás a tudásban, a viselkedésben vagy a képességekben, amelyet tapasztalat, gyakorlás vagy megfigyelés okoz. A kettő szorosan összefügg: csak az érés után lehet hatékonyan tanulni egy adott készséget – például az olvasástanítást csak az iskolaérettség elérése után szabad elkezdeni, korábban hiábavaló erőfeszítés volna. A nevelés ugyanakkor nem siettetheti az érést, de a kedvező környezet és a megfelelő nevelés elősegíti az érési folyamatok teljes kibontakozását.
+
+A tanulásnak több fajtája van. A klasszikus kondicionálás Pavlov nevéhez köthető: egy semleges inger, például egy csöngetés, összekapcsolódik egy fontos ingerrel, mint az étel, és önmagában is reakciót vált ki. Az operáns kondicionálás Skinner elmélete, amely szerint a megerősített viselkedés erősödik, a büntetett viszont gyengül – jutalom és büntetés formálja a viselkedést. A szociális, vagyis megfigyeléses tanulás Bandura elmélete: megfigyeléssel és utánzással tanulunk, a modell hatása erős, hiszen ha a gyermek erőszakos viselkedést lát, azt is tanulhatja. Emellett létezik a fogalmi, belátásos tanulás és a memorizálás is.
+
+Az emberi szükségletek és motívumok rendszerét legismertebben Maslow szükséglethierarchiája írja le. Eszerint az alapszükségletek, vagyis az étel és a biztonság kielégítése szükséges ahhoz, hogy a magasabb rendű szükségletek, mint a szeretet, az elismerés vagy az önmegvalósítás elérhetővé váljanak. A hierarchia alulról felfelé öt szintből áll: fiziológiai szükségletek, biztonság, valahova tartozás és szeretet, megbecsülés és elismerés, végül az önmegvalósítás. A motívum belső hajtóerő, amely cselekvésre indít és egy cél felé irányítja a viselkedést. Megkülönböztetjük a primer, vagyis biológiai alapszükségleteket, mint az éhség, a szomjúság vagy az alvás, a szekunder, tanult szükségletektől, mint az elismerés, a kapcsolatok vagy a teljesítmény iránti igény.
+
+A gyógypedagógiai munkában különösen fontos szem előtt tartani, hogy a fejlesztés csak akkor lehet hatékony, ha a gyermek alapvető szükségletei, a biztonság, a szeretet és az elfogadás ki vannak elégítve, hiszen e nélkül a magasabb rendű tanulási és fejlődési folyamatok nem indulhatnak be.`,
     kartya: [
       { k: "Mi az érés fogalma?", v: "Az érés genetikailag programozott, belső fejlődési folyamat – az idegrendszer, az érzékszervek és a motorikus rendszer biológiai megérése. Nem igényel tanulást." },
       { k: "Mi a tanulás fogalma pszichológiai értelemben?", v: "A tanulás tartós változás a tudásban, viselkedésben vagy képességekben, amelyet tapasztalat, gyakorlás vagy megfigyelés okoz." },
@@ -800,6 +1058,15 @@ const tetelek = [
     id: 9,
     cim: "Fejlődéslélektan, kötődés, anya-gyermek kapcsolat",
     tetelSzoveg: "Mutassa be a fejlődéslélektan fogalmát, jellemzőit! Határozza meg és értelmezze a kötődés fogalmát és a korai anya-gyermek kapcsolat jelentőségét! Mutassa be a korai anya-gyermek kapcsolatra vonatkozó kísérleteket, megfigyeléseket!",
+    teljesLeiras: `A fejlődéslélektan a pszichológia azon ága, amely az ember pszichológiai fejlődését vizsgálja a fogantatástól egészen az öregkorig – az érzelmi, kognitív, szociális és személyiségbeli változásokat. Jellemzően longitudinális szemléletű, vagyis a változásokat és azok törvényszerűségeit vizsgálja, és mindig figyelembe veszi a biológiai és a környezeti tényezők kölcsönhatását.
+
+A kötődés a csecsemő és a gondozója között kialakuló erős, tartós érzelmi kötelék, amely alapul szolgál a biztonságérzethez és a későbbi kapcsolatokhoz. A kötődéselmélet alapjait John Bowlby brit pszichiáter dolgozta ki az ötvenes-hatvanas években, evolúciós megközelítésű elmélet keretében, amely a kötődés biológiai funkcióját vizsgálta. Mary Ainsworth dolgozta ki az úgynevezett Idegen helyzet kísérletet, amelyben azt vizsgálta, hogyan reagál a csecsemő az anya távozásakor és visszatérésekor – anya és gyermek idegennel találkoznak, az anya elmegy, az idegen marad, majd az anya visszatér, és a gyermek reakciói alapján mérhető a kötődési stílus. Így négy kötődési stílust azonosított: a biztonságos kötődést, amikor a gyermek bátran felfedez, mert biztos az anya visszatérésében; az elkerülő kötődést, amikor a gyermek kevéssé reagál; a szorongó-ambivalens kötődést, amikor nagyon fél az anya hiányától; és a dezorganizált kötődést, amelynél nincs egységes stratégia. A biztonságos kötődésnek hosszú távú pozitív hatása van: a felnőtt képes lesz egészséges kapcsolatokat kialakítani, jobban birkózik meg a stresszel, és magasabb az önértékelése.
+
+Két klasszikus megfigyelés is rávilágít a korai kapcsolat jelentőségére. Harlow majomkísérleteiben a kölyök a táplálékot adó drótmama helyett a puha anyagból készült textilmamához ragaszkodott, ami bizonyítja, hogy a kötődés nem csak a táplálkozáson, hanem a testi közelségen alapul. Spitz megfigyelése, az úgynevezett hospitalizáció jelensége szerint az intézetben felnövő, anyai gondoskodástól megfosztott csecsemők súlyos fejlődési visszamaradást, sőt anaklitikus depressziót szenvedhetnek, és súlyos esetben akár meg is halhatnak.
+
+Fontos megemlíteni az apa-gyermek kapcsolat szerepét is: az apa más stílusú kötődést nyújt, több fizikai játékot és kihívást, ami segíti az önállóság fejlődését és az énhatárok kialakulását. A kötődés szempontjából érzékeny időszak az első hat-tizenkét hónap: ha ekkor nem alakul ki stabil kapcsolat, a fejlődés tartósan sérülhet. Erikson elméletében ez az élet első évének fejlődési feladata, a bizalom kontra bizalmatlanság krízise: ha a gondozó megbízható és következetes, kialakul az alapbizalom, amely a kötődés alapja. A korai kötődési minta felnőttkorban is tovább él úgynevezett belső munkamodellként, amely meghatározza, hogyan közelítünk felnőttként a romantikus és baráti kapcsolatokhoz.
+
+A gyógypedagógiai munkában a kötődés kiemelten fontos: a sajátos nevelési igényű gyermeknél is alapvető a következetes, meleg, kiszámítható bánásmód, az asszisztens akár pótló kötődési figurává is válhat intézményi nevelés esetén, hiszen a kötődési nehézség gyakran áll a magatartásproblémák, a tanulási nehézségek és a szociális zavarok hátterében.`,
     kartya: [
       { k: "Mi a fejlődéslélektan?", v: "A pszichológia ága, amely az ember pszichológiai fejlődését vizsgálja a fogantatástól az öregkorig – az érzelmi, kognitív, szociális és személyiségbeli változásokat." },
       { k: "Melyek a fejlődéslélektan jellemzői?", v: "Longitudinális szemléletű, a változásokat és azok törvényszerűségeit vizsgálja, figyelembe veszi a biológiai és környezeti tényezők kölcsönhatását." },
@@ -835,6 +1102,15 @@ const tetelek = [
     id: 10,
     cim: "Életkori sajátosságok – újszülött, csecsemő, kisgyermekkor",
     tetelSzoveg: "Jellemezze az életkori sajátosságokat az egyes életkori szakaszokban! Mutassa be az újszülöttkor, a csecsemőkor és a kisgyermekkor testi, érési, érzelmi és viselkedési jellemzőit!",
+    teljesLeiras: `A fejlődésnek négy alapvető törvényszerűsége van: folytonos, vagyis nincsenek benne ugrások, egyenlőtlen, mert nem minden terület fejlődik egyszerre, individuális, mert mindenki más tempóban fejlődik, és alapvetően egyirányú, hiszen a visszalépés ritka.
+
+Az újszülöttkor az első négy hetet öleli fel. Ezt az időszakot az extrauterin élethez való alkalmazkodás jellemzi: a veleszületett reflexek – szopóreflex, Moro-reflex, vagyis ijedési reflex, fogóreflex, lépőreflex, keresőreflex – automatikus, beépített reakciók, az alvás dominál a napban, és az alapvető érzékelés már működik: az újszülött harminc centiméterre élesen lát, hall, érez ízeket és szagokat, és korán preferálja az emberi arcot, ami egy evolúciósan kialakult kötődési mechanizmus.
+
+A csecsemőkor az első életévet jelenti. Jellemzője a gyors testi növekedés – születéskor körülbelül ötven centiméter és három kilogramm, egyéves korra háromszoros súly és kétszeres hossz, az első év a legrohamosabb növekedési periódus. A motoros fejlődés meghatározott sorrendben zajlik: fejemelés egy-két hónapos korban, fordulás három-négy hónaposan, ülés hat hónaposan, mászás nyolc hónaposan, állás tíz hónaposan, önálló járás tizenkettő-tizenöt hónapos korban. Ebben az időszakban alakul ki a kötődés, és megjelennek az első kommunikációs jelzések. Az érzelmi fejlődés is gyors: az alapérzelmek, öröm, félelem, düh korán megjelennek, a szociális mosoly hat hetesen, az idegenektől való félelem hat-nyolc hónaposan, a szeparációs szorongás pedig nyolc-tizenkét hónapos korban jelentkezik. Piaget szerint kilenc hónapos korban alakul ki a tárgyállandóság, vagyis annak megértése, hogy a tárgyak akkor is léteznek, ha nem látjuk őket.
+
+A kisgyermekkor egy-három éves kort jelent. Ekkor jelenik meg az önállóság igénye, tökéletesedik a járás, elsajátítja a gyermek az anyanyelvet, megjelenik a szimbolikus játék, és kialakul az 'én'-tudat. Az anyanyelv-elsajátítás menete: gügyögés, gagyogás, első szavak körülbelül tizenkét hónaposan, szókincsrobbanás tizennyolc-huszonnégy hónaposan, kétszavas mondatok, majd hároméves korra már összefüggő beszéd. A szimbolikus játék körülbelül kétéves kor körül jelenik meg: a gyermek egy tárgyat egy másik tárgy helyett használ, például egy banánt telefonként, ami a szimbolikus gondolkodás kialakulását jelzi. A dackorszak kettő-három éves kor táján jelenik meg, amikor a gyermek saját akaratát fejezi ki – ez nem rossz tulajdonság, hanem az 'én'-tudat megerősödésének egészséges jele.
+
+Piaget elmélete szerint két-hét éves kor között a preoperatív gondolkodás jellemző: a gyermek szimbolikusan gondolkodik, de még nem tud logikusan következtetni, egocentrikus és mágikus gondolkodás jellemzi. Az egocentrizmus azt jelenti, hogy a kisgyermek úgy érzi, mindenki úgy látja a világot, ahogy ő – ez nem önzőség, hanem fejlődési sajátosság. A csecsemő napját nagyrészt az alvás uralja, napi tizenhat-húsz óra, és alvás közben konszolidálódnak a megtanultak, valamint fejlődik az idegrendszer. Az érzelmi szükségletek ebben az életszakaszban a biztonság, a szeretet, a kiszámíthatóság, a határok, az elismerés és a felfedezési tér – ezek hiányában a fejlődés megreked.`,
     kartya: [
       { k: "Mik a fejlődés törvényszerűségei?", v: "1. Folytonos (nincs ugrás). 2. Egyenlőtlen (nem minden terület egyszerre fejlődik). 3. Individuális (mindenki más tempóban). 4. Egyirányú (visszalépés ritka)." },
       { k: "Mit jellemez az újszülöttkor?", v: "Az első 4 hét az újszülöttkor. Jellemzői: alkalmazkodás az extrauterin élethez, reflexek (szopás, kapaszkodás), alvás dominanciája, alapvető érzékelés." },
@@ -870,6 +1146,15 @@ const tetelek = [
     id: 11,
     cim: "Életkori sajátosságok – óvodáskor, kisiskoláskor, serdülőkor",
     tetelSzoveg: "Jellemezze az életkori sajátosságokat az egyes életkori szakaszokban! Mutassa be az óvodáskor, a kisiskoláskor és a serdülőkor testi, érési, érzelmi és viselkedési jellemzőit!",
+    teljesLeiras: `Az óvodáskor három-hat éves kort jelent. Vezető tevékenysége a játék, jellemzi az intenzív mozgásfejlődés, a fantázia virágkora, a szociális kapcsolatok bővülése, a szabálytudat kialakulása és a kíváncsiság. Érzelmei hevesek és gyorsan változók, tipikusak a félelmek, például a sötéttől vagy a szörnyektől való félelem, megjelennek az empátia csírái, és kiemelkedő szerepe van a família érzelmi melegségének.
+
+Az óvodáskor végén alakul ki az iskolaérettség, vagyis az az idegrendszeri, mozgásos, szociális és pszichikus érettségi szint, amely lehetővé teszi az iskolai követelmények teljesítését. Kritériumai közé tartozik a figyelemkoncentráció, az önszabályozás, a szociális érettség, a finommotorika – például a ceruzafogás –, a lelkiismeretes munkaattitűd, valamint az alapvető szókincs és számfogalom.
+
+A kisiskoláskor hat-tíz éves kort ölel fel. Erre Piaget szerint a konkrét műveleti gondolkodás jellemző: a gyermek logikusan gondolkodik, de csak konkrét, szemléletes esetekre, az elvont következtetés még nem megy. Ebben a szakaszban alakul ki a megőrzés, vagyis a konzerváció fogalma: a gyermek megérti, hogy az anyagmennyiség nem változik meg, ha csak az alakja változik – például egy magas, vékony pohár ugyanannyi vizet tartalmaz, mint egy alacsony, széles. Erikson szerint ebben a szakaszban a szorgalom kontra kisebbrendűség krízisét éli meg a gyermek, és egyre nagyobb szerepet kapnak a kortársak.
+
+A serdülőkor tíz-tizennyolc éves kort jelent, és a pubertás, vagyis a nemi érés időszaka. Jellemzői a testi változások – növekedési lökés, a nemi szervek fejlődése, a másodlagos nemi jellegek megjelenése –, az identitáskeresés, a kortárscsoport dominanciája, az érzelmi hullámzás, valamint az absztrakt gondolkodás megjelenése. Lányoknál a pubertás testi jelei a mellnövekedés, a menstruáció és a csípő kiszélesedése, fiúknál a hangmélyülés, a szőrnövekedés és a nemi érés; mindkét nemnél jellemző az akné és a verejtékmirigyek fokozott aktivitása. Erikson szerint a serdülőkor fejlődési krízise az identitáskeresés: 'Ki vagyok én?' – a fiatal különböző szerepeket próbál ki, mielőtt stabil identitást alakít ki. Piaget szerint körülbelül tizenkét éves kortól alakul ki a formális műveleti gondolkodás, amikor a fiatal már elvontan is tud gondolkodni, feltételezéseket tud vizsgálni, és logikailag tud következtetni elméletekre is.
+
+A serdülőkorban a família hatása csökken, a kortárscsoport veszi át a fő szocializációs szerepet, ami azonos értékeket, megértést és identitástámaszt ad, de nyomást is jelenthet. Jellemző az érzelmi labilitás, vagyis a gyors hangulatingadozás a hormonális változások miatt, valamint egy újfajta egocentrizmus: az imaginárius közönség élménye, vagyis hogy 'mindenki rám figyel', és a személyes fábula, vagyis hogy 'velem ez nem történhet meg'. Kohlberg szerint a serdülők erkölcsi fejlődésükben a posztkonvencionális szint felé mozdulnak, elveket, igazságot és elvont erkölcsi értékeket kezdenek mérlegelni. A rizikómagatartás, vagyis a veszélyes szituációk keresése az idegrendszer még éretlen impulzusszabályozása és az autonómiavágy együttes következménye, a lázadás pedig az önállóság kivívásának szükségszerű, normális fejlődési eszköze, amelyhez azonban következetes határok kellenek. A pedagógus legjobb eszközei ebben az életszakaszban a tiszteletteljes, dialogikus kapcsolat, a határok következetes tartása, az autonómia fokozatos biztosítása és az empátia a hangulatingadozások idején.`,
     kartya: [
       { k: "Mi jellemzi az óvodáskort (3-6 év)?", v: "Vezető tevékenység a játék. Intenzív mozgásfejlődés, fantázia virágkora, szociális kapcsolatok bővülése, szabálytudat kialakulása, kíváncsiság." },
       { k: "Mi az iskolaérettség?", v: "Az idegrendszeri, mozgásos, szociális és pszichikus érettség szintje, amely lehetővé teszi az iskolai követelmények teljesítését. Feltétele a sikeres iskolakezdésnek." },
@@ -906,6 +1191,17 @@ const tetelek = [
     id: 12,
     cim: "Megismerő funkciók fejlődése",
     tetelSzoveg: "Mutassa be a megismerő funkciók (érzékelés, észlelés, figyelem, emlékezet, képzelet, gondolkodás) fejlődésének sajátosságait újszülöttkortól kisiskoláskorig!",
+    teljesLeiras: `A megismerő funkciók közé tartozik az érzékelés, az észlelés, a figyelem, az emlékezet, a képzelet és a gondolkodás – ezek teszik lehetővé, hogy a külső világ információit feldolgozzuk. Az érzékelés az inger hatása az érzékszervekre, például a fény a szemre, az észlelés pedig az érzékletek értelmezése, értelmessé tétele az agyban, vagyis amikor felismerjük, hogy amit látunk, az egy alma.
+
+Az érzékelés újszülöttkorban is már jól fejlett: a látás harminc centiméterre éles, és az újszülött preferálja az emberi arcot, a hallása fejlett és hangra reagál, a tapintása, íz- és szagérzékelése szintén fejlett, bár felnőtt szinttől még elmarad. A figyelem fejlődése jól nyomon követhető: újszülöttnél involuntáris, vagyis reflexszerű, csecsemőnél szelektívvé válik – az arcot és a mozgást figyeli –, kisgyermeknél rövid, de már szándékos, óvodásnál tíz-tizenöt percig tart, kisiskolásnál pedig már húsz-harminc percig. Az önkéntelen figyelmet egy erős, új vagy érdekes inger vonja magára automatikusan – ez az alapvető figyelemforma csecsemőkorban –, míg a szándékos figyelem tudatos, irányított, és körülbelül hároméves kortól fejlődik ki, iskoláskorban válik meghatározóvá.
+
+Az emlékezet fejlődése szintén fokozatos: csecsemőnél rövid felismerési emlékezet van, kisgyermeknél megjelenik az epizodikus emlékezet, vagyis az élmények emlékezete, óvodásnál kialakul a szándékos memorizálás, kisiskolásnál pedig már tanulási stratégiák is megjelennek. Megkülönböztetjük a deklaratív emlékezetet, vagyis a tények és élmények tudását, a procedurális emlékezettől, amely a cselekvések automatizált emlékezete, mint a kerékpározás. Az infantilis amnézia jelensége miatt nem emlékezünk csecsemőkorunkra: a hippocampus, vagyis az emlékezeti agyterület még nem érett az életesemények tárolásához három-négy éves kor előtt.
+
+A képzelet kétéves kortól jelenik meg a szimbolikus játékban, óvodáskorban éli virágkorát, amikor a fantázia és a valóság gyakran keveredik, kisiskoláskorra pedig realisztikusabbá válik. A gondolkodás fejlődését Piaget négy szakaszra osztotta: a szenzomotoros szakasz nulla-kétéves korban, amikor a gyermek cselekvéssel és érzékeléssel ismeri meg a világot, szimbolikus gondolkodás nélkül; a preoperatív szakasz két-hétéves korban; a konkrét műveleti szakasz hét-tizenegy éves korban, amikor megjelenik a konzerváció, vagyis annak megértése, hogy az anyag mennyisége nem változik az alak megváltozásával; és tizenkét éves kortól a formális műveleti szakasz.
+
+A munkamemória, vagyis a rövid távú memória korlátozott kapacitású – nagyjából hét elemet képes tárolni körülbelül húsz másodpercig –, ami az iskolai tanulási nehézségek egyik fontos tényezője. Az emlékezet fejlesztésének eszközei az ismétlés, a csoportosítás, vagyis a chunking, az asszociációk, a mnemotechnikák, az értelmes, összefüggésekre épülő tanulás és a mozgásos bevésés. A gondolkodás fejlesztésének iskoláskori eszközei a problémamegoldó feladatok, a kísérletezés, a vita, a projektmunka, az analógiák keresése és az ok-okozati összefüggések feltárása.
+
+Sajátos nevelési igényű gyermekeknél a figyelem fejlesztését rövid feladatokkal, sok váltással, érzékletes anyagokkal, strukturált környezettel, jutalmazással és vizuális segédeszközökkel segíthetjük. Az érzékszervi stimuláció csecsemőkorban kiemelten fontos, hiszen az érzékleti ingerek serkentik az idegrendszer fejlődését – ingerszegény környezetben, vagyis depriváció esetén a megismerő funkciók fejlődése visszamaradhat.`,
     kartya: [
       { k: "Melyek a megismerő funkciók?", v: "Érzékelés, észlelés, figyelem, emlékezet, képzelet, gondolkodás – ezek teszik lehetővé, hogy a külső világ információit feldolgozzuk." },
       { k: "Mi az érzékelés és az észlelés különbsége?", v: "Érzékelés: az inger hatása az érzékszervekre (pl. fény a szemre). Észlelés: az érzékletek értelmezése, értelmessé tétele az agyban (pl. ez egy alma)." },
@@ -942,6 +1238,17 @@ const tetelek = [
     id: 13,
     cim: "Szociálpszichológia alapfogalmai",
     tetelSzoveg: "Ismertesse a szociálpszichológia fogalmát, tárgyát és mutassa be a szociálpszichológia alapfogalmait: csoport, szerep, státusz, előítélet, deviancia",
+    teljesLeiras: `A szociálpszichológia azt vizsgálja, hogyan befolyásolja mások jelenléte, véleménye és viselkedése az egyén gondolkodását, érzelmeit és cselekedeteit. A csoport két vagy több személy, akik között tartós interakció, közös cél, közös normák és csoportidentitás alakult ki. Megkülönböztetünk elsődleges csoportokat, mint a família vagy a baráti kör, amelyek személyesek és meghittek, és másodlagos csoportokat, mint az iskola vagy a munkahely, amelyek formálisabbak és funkcionálisabbak.
+
+A csoportszerep a csoport által elvárt viselkedésmód, amelyet a csoporttagoknak be kell tölteniük, például vezető, mediátor vagy szorgalmas tag. A státusz az egyén rangsora, tekintélye, elismertsége a csoporton belül, amely meghatározza, mennyire hallgatnak rá, mekkora a befolyása. A szerep és a státusz szorosan összefügg: a magas státuszú személytől elvárják a vezető szerepet, de a szerep betöltése is emelheti a státuszt – egymást erősítik.
+
+Az előítélet negatív érzelmi és kognitív beállítódás valakivel szemben, anélkül hogy valódi személyes tapasztalatunk lenne róla, jellemzően egy csoporthoz tartozása alapján. Az előítélet kialakulhat sztereotípiákból, az idegen csoporttal szembeni félelemből, ismerethiányból vagy a szocializáció során átvett negatív véleményekből. A sztereotípia leegyszerűsített, általánosított kép egy csoportról, amely nem veszi figyelembe az egyéni különbségeket. A sztereotípia inkább kognitív, gondolkodásbeli általánosítás, az előítélet ezzel szemben érzelmileg negatív, és cselekvésre hajlamosít, ami diszkriminációhoz vezethet – ez utóbbi az előítéleten alapuló hátrányos megkülönböztetés a cselekvésben, például amikor valakit emiatt nem vesznek fel munkára.
+
+A deviancia az adott társadalmi normáktól való eltérést jelenti – olyan eltérő viselkedést, amely megsérti a közmegállapodott szabályokat. Megkülönböztetünk pozitív devianciát, mint egy zseni vagy egy forradalmár, és negatív devianciát, mint a bűnözés vagy az önkárosítás – mindkettő a normáktól való eltérés, csak más-más előjellel.
+
+Fontos fogalom a csoportkohézió, vagyis az az összetartó erő, amely a csoportot egységben tartja: erős kohézió hatékony együttműködéshez vezet, de magában hordozza a csoportnyomás veszélyét is. A konformitás az a jelenség, amikor alkalmazkodunk a csoportnormákhoz, akár saját véleményünk ellenére is – Asch klasszikus kísérletében a résztvevők nyilvánvalóan helytelen válaszokat is adtak, csak hogy beleolvadjanak a csoportba. A szociális facilitáció azt jelenti, hogy mások jelenléte javítja a jól ismert, automatikus feladatok teljesítményét, de rontja az újszerű, nehéz feladatokét. A bystander-effektus pedig azt a jelenséget írja le, hogy minél többen vannak jelen egy segítséget igénylő helyzetben, annál kevésbé avatkoznak be, mert mindenki azt gondolja, majd a másik megteszi.
+
+Az iskolai gyakorlatban az előítéletek csökkentésének leghatékonyabb eszközei a személyes kontaktus az előítélet tárgyával, a pozitív visszajelzések, az inkluzív szemlélet, a pedagógus saját modellezése és a kooperatív feladatok alkalmazása.`,
     kartya: [
       { k: "Mi a szociálpszichológia?", v: "A szociálpszichológia azt vizsgálja, hogyan befolyásolja mások jelenléte, véleménye és viselkedése az egyén gondolkodását, érzelmeit és cselekedeteit." },
       { k: "Mi a csoport fogalma?", v: "Két vagy több személy, akik között tartós interakció, közös cél, közös normák és csoportidentitás alakult ki." },
@@ -979,6 +1286,13 @@ const tetelek = [
     id: 14,
     cim: "Nevelési stílusok, nevelői attitűd",
     tetelSzoveg: "Mutassa be a nevelési – vezetési stílusokat, valamint a nevelői attitűd formáit! Ismertesse a gyermekek, tanulók közötti kapcsolatok feltérképezésének lehetőségét!",
+    teljesLeiras: `A nevelési stílus a nevelő azon jellemző, viszonylag tartós magatartásformáinak összessége, amelyeket a nevelt irányában alkalmaz – tehát a szeretet, a kontroll és a kommunikáció mintázata. Három alapvető nevelési stílust különböztetünk meg. A tekintélyelvű, vagyis autoritárius nevelőre magas kontroll és alacsony melegség jellemző, jelmondata: 'Ezt mondom, ezt teszed.' Következménye az engedelmesség, de az alacsony önbizalom és a kreativitás gátlása is. Az engedékeny, permisszív nevelőnél alacsony a kontroll, de magas a melegség, jelmondata: 'Mindent szabad.' Következménye, hogy a gyerek nem ismeri a határokat, és alacsony a frusztrációtűrése. A megkívánó, autoritatív vagy demokratikus nevelőnél magas a kontroll és magas a melegség egyszerre: következetes határokat tart, de mindig magyaráz és szeretetet is ad – a kutatások szerint ez vezet a legjobb fejlődési eredményekhez.
+
+A nevelői attitűd a nevelő érzelmi beállítódása, viszonyulása a neveltek felé: lehet elfogadó, elutasító, közömbös vagy túlvédő. Az elfogadó-demokratikus attitűd, az elutasító-autoriter, a közömbös-elhanyagoló és a túlvédő-engedékeny attitűd az emocionális klíma és a kontroll tengelyén különböznek egymástól. Az elutasító nevelői attitűd súlyos következményekkel jár: a gyermek nem érzi magát szeretve, ami alacsony önértékeléshez, magatartásproblémákhoz, szorongáshoz és az agresszió kialakulásának fokozott kockázatához vezethet. Fontos fogalom a kettős kötés is, amikor egymásnak ellentmondó üzeneteket kap a gyermek – például szóban 'szeretlek' hangzik el, miközben a testbeszéd elutasítást mutat –, ekkor a gyermek nem tudja, melyiket higgye, ami pszichésen káros hatású.
+
+A gyermekek és tanulók közötti kapcsolatok feltérképezésének klasszikus eszköze a szociometria, amelyet Moreno dolgozott ki: ezzel a csoporton belüli kapcsolatokat mérik, vagyis hogy ki kihez vonzódik, és kit utasít el, kérdőív és szociogram segítségével. A szociogram a szociometriai felmérés grafikus ábrázolása, ahol a nyilak mutatják az elfogadást és az elutasítást – ez segít azonosítani a vezéreket, a peremhelyzetűeket és a magányos tanulókat. A csillag típusú tanuló sok pozitív szavazatot kap, ő a csoport informális vezetője; a peremhelyzetű tanulónak kevés kapcsolata van, sem nem kifejezetten kedvelt, sem nem elutasított; az elutasított, izolált tanulót pedig sok negatív szavazat éri, akit aktívan kerülnek vagy elutasítanak – ő fokozott pedagógiai figyelmet igényel.
+
+A csoportklíma feltérképezése azért fontos, mert ha ismerjük a csoport dinamikáját, célzottan tudjuk segíteni a kirekesztett tanulókat, és megelőzhetjük a bullyingot. Fontos megkülönböztetni a bullyingot a konfliktustól: a bullying szándékos, ismétlődő ártás hatalmi egyenlőtlenség mellett, míg a konfliktus egyszeri, és az erőviszonyok egyenlők – bullying esetén azonnali pedagógiai beavatkozás szükséges. Sajátos nevelési igényű gyermeknél a nevelési stílus hatása felerősödik: számára különösen fontos a kiszámítható, következetes, elfogadó és türelmes nevelői attitűd, amely megadja a fejlődéshez szükséges érzelmi biztonságot.`,
     kartya: [
       { k: "Mi a nevelési stílus fogalma?", v: "A nevelő azon jellemző, viszonylag tartós magatartásformáinak összessége, amelyeket a nevelt irányában alkalmaz – a szeretet, a kontroll és a kommunikáció mintázata." },
       { k: "Mi a tekintélyelvű (autoritárius) nevelő jellemzője?", v: "Magas kontroll, alacsony melegség. 'Ezt mondom, ezt teszed.' Következménye: engedelmesség, alacsony önbizalom, kreativitás gátlása." },
@@ -1015,6 +1329,17 @@ const tetelek = [
     id: 15,
     cim: "Gyógypedagógia fogalma, tankötelezettség",
     tetelSzoveg: "Ismertesse a gyógypedagógia fogalmát, tárgyát, célját! Mutassa be a gyógypedagógiai tankötelezettség főbb jellemzőit! Értelmezze az alábbi fogalmakat: különleges bánásmód, BTMN, SNI, integráció, inklúzió, szegregáció.",
+    teljesLeiras: `A gyógypedagógia az a tudományág és gyakorlati tevékenység, amely az akadályozott fejlődésű, sérült, fogyatékos személyek nevelésével, oktatásával, fejlesztésével és rehabilitációjával foglalkozik. Tárgya az akadályozott fejlődésű, sérült személyek nevelési, oktatási és fejlesztési szükségletei, valamint az ezekre adott speciális pedagógiai válaszok. Célja a fogyatékos személyek optimális fejlesztése, a minőségi élet biztosítása, a társadalmi beilleszkedés elősegítése és az önállóság maximalizálása.
+
+A különleges bánásmódot igénylő gyermekek köre tágabb fogalom: ide tartoznak az SNI-s tanulók, a BTMN-es tanulók és a kiemelkedően tehetséges tanulók is, akik mindannyian egyéni, differenciált ellátást igényelnek. A BTMN, vagyis a Beilleszkedési, Tanulási, Magatartási Nehézség nem fogyatékosság, hanem funkcionális nehézség – például a diszlexia veszélye, a hiperaktivitás vagy a beilleszkedési gondok –, amely pedagógiai szempontból speciális módszereket igényel. Az SNI két kategóriára osztható: az SNI 'A' kategória a súlyosabb fogyatékosságot jelenti, mint a vakság, a süketség, a mozgáskorlátozottság, az értelmi akadályozottság vagy az autizmus, amely többletforrásra jogosít, az SNI 'B' kategória pedig az enyhébb fogyatékosságot foglalja magában.
+
+A gyógypedagógiai tankötelezettség azt jelenti, hogy az SNI-s gyermekeknek is kötelező a tankötelezettség, amelyet speciális intézményben, integrált formában vagy fejlesztő nevelés-oktatás keretében teljesíthetnek. A fejlesztő nevelés-oktatás a legsúlyosabb fogyatékosságú gyermekek számára biztosított iskolai forma, ahol az oktatási cél helyett a fejlesztés és a gondozás kap prioritást. Az állam törvényi jogként biztosítja az SNI-s gyermekek ellátását: ingyenes szakszolgáltatást, fejlesztő pedagógust, gyógypedagógust, segítő munkatársat, segédeszközöket és korai fejlesztést.
+
+Az integráció, az inklúzió és a szegregáció fogalmait szükséges pontosan elhatárolni egymástól. Az integráció esetén az SNI-s tanuló a többségi intézménybe kerül, és ott speciális segítséggel vesz részt az oktatásban, miközben a rendszer csak minimálisan változik körülötte. Az inklúzió a teljes befogadás elvén alapuló szemlélet, ahol az iskola és a tanítás módszertana alakul a tanuló sokszínűségéhez, és mindenki aktív tagja marad a közösségnek. A szegregáció esetén az SNI-s tanulókat speciális intézménybe irányítják, ahol homogén csoportban kapnak szakmai ellátást – súlyos esetekben ez indokolt megoldás lehet.
+
+Az Egységes Gyógypedagógiai Módszertani Intézmény, röviden EGYMI, utazó gyógypedagógusokat biztosít integrált iskolákba, és tanácsadást, fejlesztést is nyújt. A Szakértői Bizottság feladata az SNI meglétének, típusának és fokának megállapítása, javaslattétel az oktatás formájára, valamint a szükséges ellátás meghatározása. Mindezek alapján minden SNI-s gyermek egyéni fejlesztési tervet kap, amely személyre szabottan tartalmazza a fejlesztési célokat, a módszereket, a felelős személyeket és az értékelési szempontokat.
+
+A gyógypedagógia alapelvei közé tartozik a humanitás, a személy méltóságának tisztelete, az optimális fejlesztés elve, a normalizáció, az integráció, a közösségi beágyazottság és az individualizáció. A normalizáció elve azt jelenti, hogy mindenkit, fogyatékosságától függetlenül, megillet a normális életkörülmények és életritmus lehetősége. A komplex rehabilitáció az orvosi, pedagógiai, szociális és foglalkozási rehabilitáció együttese, amely a teljes ember minden területén segíti a beilleszkedést. A gyógypedagógia interdiszciplináris tudomány: szorosan kapcsolódik a pszichológiához, az orvostudományhoz, a szociológiához, a joghoz és az informatikához is. A gyógypedagógiai asszisztens ebben a rendszerben a gyógypedagógus irányítása alatt dolgozik: megvalósítja a fejlesztési tervet, gondozási feladatokat végez, és segíti a mindennapi tevékenységeket.`,
     kartya: [
       { k: "Mi a gyógypedagógia fogalma?", v: "A gyógypedagógia az a tudományág és gyakorlati tevékenység, amely az akadályozott fejlődésű, sérült, fogyatékos személyek nevelésével, oktatásával, fejlesztésével és rehabilitációjával foglalkozik." },
       { k: "Mi a gyógypedagógia tárgya?", v: "Az akadályozott fejlődésű, sérült személyek nevelési, oktatási, fejlesztési szükségletei és az ezekre adott speciális pedagógiai válaszok." },
@@ -1050,6 +1375,13 @@ const tetelek = [
     id: 16,
     cim: "Szakértői bizottság, korai fejlesztés",
     tetelSzoveg: "Mutassa be a szakértői bizottság tevékenységét, a gyógypedagógiai diagnózis felállításának lényeges jellemzőit! Ismertesse a korai fejlesztés és gondozás fogalmát, feladatát, tartalmát!",
+    teljesLeiras: `A Szakértői Bizottság a pedagógiai szakszolgálat része, amelynek feladata a fogyatékosság diagnosztizálása, javaslat tétele az ellátásra, valamint a fejlesztési javaslat megfogalmazása. Tagjai a vezető gyógypedagógus, egy pszichológus és egy szakorvos, szükség esetén logopédus, konduktor vagy szociális munkás is részt vesz a munkában. A szakértői vélemény tartalmazza a fogyatékosság megállapítását, annak típusát és fokát, az oktatási forma javaslatát – integrált vagy szegregált –, valamint a szükséges fejlesztéseket és segédeszközöket.
+
+A gyógypedagógiai diagnózis komplex állapotfelmérés, amely nemcsak a fogyatékosságot azonosítja, hanem a gyermek erősségeit, fejlesztési lehetőségeit és szükségleteit is feltárja. A vizsgálat folyamata jól meghatározott lépésekből áll: először felveszik az anamnézist, vagyis a gyermek teljes fejlődéstörténetét – a terhességet, a szülést, a korai fejlődési mérföldköveket, a betegségeket és a családi-szociális hátteret –, ezt követi a pszichológiai vizsgálat, majd a gyógypedagógiai vizsgálat, az orvosi vélemény, a komplex értékelés, a szülőkkel való megbeszélés, és végül elkészül a szakvélemény. A vizsgálat során standardizált teszteket alkalmaznak, mint a Bender, a Raven vagy a WISC, ezenkívül megfigyelést, szülői interjút és dokumentumelemzést, például az óvodai jellemzést is végeznek. A szakértői véleményt rendszeresen, általában két-három évente felül kell vizsgálni, mert a gyermek állapota és szükségletei változhatnak. A szülőknek joguk van jelen lenni a vizsgálaton, bepillanthatnak a véleménybe, fellebbezhetnek, és bizonyos korlátok között dönthetnek az oktatási forma megválasztásáról is.
+
+A korai fejlesztés a nulla-öt éves korú, fogyatékosság kockázatával élő vagy fogyatékos gyermekeknek nyújtott komplex fejlesztési és gondozási szolgáltatás. Azért kritikus, mert az idegrendszer az élet első éveiben a legplasztikusabb, így a korai beavatkozás sokkal hatékonyabb, mint a késői, és a fejlődési zavarok hatása is jobban kompenzálható. A korai fejlesztés tartalma a gyógypedagógiai fejlesztés, a pszichológiai gondozás, a szülők támogatása, a logopédia, a konduktív pedagógia, a gyógytorna, és szükség esetén az orvosi kezelés. Formái lehetnek ambulánsak, amikor a gyermek bejár, otthoniak, amikor a szakember megy ki a családhoz, vagy intézményesek, mint a bölcsőde vagy a korai fejlesztő csoport. Célja a másodlagos fogyatékosságok kialakulásának megelőzése, a fejlődés optimalizálása, a szülők megerősítése, és az óvodai integráció elősegítése.
+
+A korai gondozás a korai fejlesztés részterülete: ide tartozik az egészségügyi gondozás, a higiéniás és ápolási feladatok, valamint a szükséges eszközök biztosítása. A rizikógyermek fogalma olyan gyermeket jelöl, akinél a fogyatékosság kialakulásának fokozott veszélye áll fenn, például koraszülöttség, genetikai ok vagy kedvezőtlen környezet miatt. A szülők aktív részesei a korai fejlesztésnek: megtanulják otthon is végezni a fejlesztő tevékenységeket, ezzel megtöbbszörözve annak hatását. A gyógypedagógiai asszisztens a korai fejlesztésben a gyógypedagógus irányítása alatt vesz részt a gondozásban, a mindennapi tevékenységek előkészítésében és a szülők tájékoztatásának támogatásában.`,
     kartya: [
       { k: "Mi a Szakértői Bizottság?", v: "Szakértői Bizottság (korábban SZBI) a pedagógiai szakszolgálat része. Feladata: fogyatékosság diagnosztizálása, javaslat az ellátásra, fejlesztési javaslat." },
       { k: "Kik a szakértői bizottság tagjai?", v: "Gyógypedagógus (vezető), pszichológus és orvos (szakorvos). Szükség szerint logopédus, konduktor, szociális munkás is részt vesz." },
@@ -1085,6 +1417,15 @@ const tetelek = [
     id: 17,
     cim: "Tanulásban akadályozottság",
     tetelSzoveg: "Mutassa be a tanulásban akadályozottság fogalmát, okait, tüneteit, valamint a tanulásban akadályozottak nevelésének-oktatásának főbb jellemzőit! Fejtse ki az önálló életvitel lehetőségeit a tanulásban akadályozottak körében!",
+    teljesLeiras: `A tanulásban akadályozottság enyhe fokú intellektuális károsodás, amely az iskolai tanulási teljesítményt számottevően gátolja, de az önálló életvitelt nem zárja ki. Fontos megjegyezni, hogy a tanulásban akadályozottság tágabb fogalom, mint az enyhe értelmi fogyatékosság: nem minden tanulásban akadályozott tanuló értelmileg fogyatékos, a fogalom magában foglalja az enyhe értelmi fogyatékosságot, de más okú tanulási nehézségeket is.
+
+Okai lehetnek organikusak, vagyis agykárosodás vagy genetikai ok, környezetiek, mint a depriváció vagy az elhanyagolás, funkcionálisak, például érzelmi zavar, vagy ezek kombinációja. Főbb tünetei közé tartozik a gyenge érzékelés, a sajátos – rövid, könnyen elterelhető – figyelem, az emlékezeti problémák, a lassú tanulási tempó és az absztrakcióra való korlátozott képesség. A figyelem rövid kapacitású és könnyen elvonható, de a tanuló számára érdekes témában tartósabb koncentrációra is képes lehet. Az emlékezetre lassú bevésés és gyors felejtés jellemző, a mechanikus emlékezet viszonylag jobb, mint az összefüggő emlékezet, ezért az ismétlés és a strukturálás sokat segít.
+
+A nevelési-oktatási elvek között kiemelt szerepe van a fokozott szemléletességnek, a lassabb haladási tempónak, a kisebb lépésekre bontásnak, az azonnali megerősítésnek, a sok ismétlésnek, az erős oldalakon való kompenzálásnak és a praktikus, életközeli tartalmaknak. Az iskoláztatás formái lehetnek az enyhe értelmi fogyatékosok szegregált iskolája, az integrált általános iskola megfelelő támogatással, vagy a legsúlyosabb esetekben a fejlesztő nevelés-oktatás. A tantárgy-pedagógia ezeknél a tanulóknál életközeli, funkcionális tartalmakra, cselekvésbe ágyazott tanulásra épít, kevesebb elvont elméleti anyaggal és több gyakorlati készségfejlesztéssel.
+
+Megfelelő nevelés és fejlesztés esetén az önálló életvitel számos területen elérhető: önellátás, egyszerű munkavégzés, akár önálló – esetleg támogatott – lakhatás, szociális kapcsolatok és közösségi részvétel. A támogatott életvitel azt jelenti, hogy a tanulásban akadályozott felnőtt önállóan él, de időszakos támogatást kap, például ügyintézésben, pénzkezelésben vagy egészségügyi döntésekben. Foglalkoztatási lehetőség lehet a védett, szociális foglalkoztatás, a nyílt munkaerőpiaci foglalkoztatás egyszerűbb munkakörökben, vagy a szociális szövetkezet. Az életviteli kompetenciák – önkiszolgálás, főzés, pénzkezelés, közlekedés, ügyintézés – célzott tanítása elengedhetetlen a mindennapi élethez való alkalmazkodáshoz.
+
+A família szerepe döntő: az elfogadás, a realisztikus elvárások és a fejlesztésbe való bevonás alapvetően meghatározza a tanulásban akadályozott személy fejlődését. A gyógypedagógiai asszisztens egyéni segítségnyújtást ad a feladatmegoldásban, támogatja az önkiszolgálást, segíti a szociális helyzeteket, és biztosítja az érzelmi biztonságot. Fontos a differenciált értékelés is: nem az osztálytársaikhoz, hanem saját korábbi teljesítményükhöz mérten értékeljük őket, ami megőrzi az önbizalmukat és a motivációjukat.`,
     kartya: [
       { k: "Mi a tanulásban akadályozottság fogalma?", v: "A tanulásban akadályozottság enyhe fokú intellektuális károsodás, amely az iskolai tanulási teljesítményt számottevően gátolja, de az önálló életvitelt nem zárja ki." },
       { k: "Hogyan viszonyul a tanulásban akadályozottság az enyhe értelmi fogyatékossághoz?", v: "A tanulásban akadályozottság tágabb fogalom – nem minden tanulásban akadályozott tanuló értelmileg fogyatékos. Magában foglalja az enyhe értelmi fogyatékosságot, de más okú tanulási nehézségeket is." },
@@ -1119,6 +1460,15 @@ const tetelek = [
     id: 18,
     cim: "Értelmi akadályozottság",
     tetelSzoveg: "Mutassa be az értelmi akadályozottság fogalmát, okait, tüneteit, valamint az értelmileg akadályozottak nevelésének, oktatásának, főbb jellemzőit! Ismertesse gondozásuk speciális feladatait!",
+    teljesLeiras: `Az értelmi akadályozottság középsúlyos és súlyos mértékű intellektuális károsodás, amely az összes pszichikus funkciót érinti, és az önálló életvitelt nagymértékben korlátozza. A tanulásban akadályozottságtól mértékben és az önállóság fokában különbözik: az értelmileg akadályozott személy nagyobb függőségben él, és több, speciálisabb gondozást igényel.
+
+Okai lehetnek genetikaiak, mint a Down-szindróma vagy a fenilketonúria, pre-, peri- és posztnatális agykárosodás, például szülési oxigénhiány vagy agyhártyagyulladás, anyagcsere-betegségek, vagy ismeretlen ok. A Down-szindrómát a huszonegyes kromoszóma triszómiája okozza, jellemzői a sajátos arckép, az izomtónus-gyengeség, a szív- és emésztőszervi rendellenességek, valamint a változó fokú értelmi akadályozottság. Az értelmi akadályozottságnak négy súlyossági fokozata van: enyhe, ötven és hetven közötti IQ-val, amely a tanulásban akadályozottság körébe sorolódik, középsúlyos, harmincöt és ötven közötti IQ-val, súlyos, húsz és harmincöt közötti IQ-val, és mélysúlyos, húsz alatti IQ-val.
+
+Főbb tünetei a fejlődési vonalak késése minden területen, a korlátozott szókincs és kommunikáció, a korlátozott absztrakcióra való képesség, és az adaptív viselkedés hiányosságai. Az adaptív viselkedés a mindennapi élethez szükséges készségek összessége – önkiszolgálás, kommunikáció, szociális készségek, önirányítás –, és ennek vizsgálata az értelmi akadályozottság megítélésének kulcsa. A nevelési elvek között szerepel a fejlesztő pedagógia: az egyéni szükségletekre épített fejlesztés, a cselekvéses tanulás, minden kis lépés értékelése, az érzelmi biztonság, és a família bevonása. A legsúlyosabb esetekben a fejlesztő nevelés-oktatás biztosítja az ellátást, ahol a cél nem a tantárgyi tudás, hanem az alapvető funkciók és az önellátás fejlesztése.
+
+A speciális gondozási feladatok közé tartozik a személyes higiénia – fürdés, fogmosás, öltözés –, az étkezés segítése, a gyógyszerelés, a mozgásgyakorlatok és szükség esetén az inkontinencia kezelése. Fontos a betegségtudat korlátozottsága is: az értelmileg akadályozott személy nem mindig érti, hogy beteg, és mikor kell orvoshoz fordulni, ezért az asszisztens megfigyelő, monitorozó szerepe kiemelten fontos – ugyanígy a gyógyszerszedésnél is gyakori probléma az elutasítás vagy a felejtés, amit az asszisztensnek figyelnie és jeleznie kell a gyógypedagógusnak.
+
+A kommunikáció az értelmileg akadályozott személyekkel rövid, egyszerű mondatokkal, sok szemléltetéssel, képekkel, gesztusokkal és szükség esetén AAK, vagyis augmentatív-alternatív kommunikációs eszközökkel – kommunikációs táblákkal, képkártyákkal, szoftverekkel – történik, türelemmel és ismétléssel. A strukturált, kiszámítható napirend csökkenti a szorongást és segíti az alkalmazkodást. Az értelmileg akadályozott személyek is tankötelesek, ezt a fejlesztő nevelés-oktatás keretében teljesítik, és életútjuk jellemzően a gyermekkori intézményes nevelésből a felnőttkori lakóotthonba vagy szülői házba, majd a foglalkoztatásba és az időskori ellátásba vezet. A gyógypedagógiai asszisztens a terápiás csapat munkáját megfigyeléseinek jelzésével, a fejlesztési terv betartásával, a következetes napi rutin fenntartásával és a szülőkkel való, a gyógypedagógus útmutatása szerinti kommunikációval segíti.`,
     kartya: [
       { k: "Mi az értelmi akadályozottság fogalma?", v: "Középsúlyos és súlyos mértékű intellektuális károsodás, amely az összes pszichikus funkciót érinti, és az önálló életvitelt nagymértékben korlátozza." },
       { k: "Mi az értelmi akadályozottság és a tanulásban akadályozottság különbsége?", v: "Mértékben és az önállóság fokában különböznek. Az értelmileg akadályozott személy nagyobb függőségben él, több gondozást és speciálisabb ellátást igényel." },
@@ -1154,6 +1504,15 @@ const tetelek = [
     id: 19,
     cim: "Látássérülés",
     tetelSzoveg: "Ismertesse a látássérülés fogalmát, okait, csoportjait, nevelésük, oktatásuk főbb jellemzőit! Mutassa be a tanulás és a tájékozódás speciális eszközeit! Jellemezze a vak gyermek mozgásfejlődésének és nyelvi fejlődésének sajátosságait!",
+    teljesLeiras: `A látássérülés a látóélesség és/vagy a látótér olyan mértékű károsodása, amely az egyén mindennapi tevékenységeit, tanulását és tájékozódását korlátozza. Három fő csoportja van: a gyengénlátók, akiknek látóélessége 0,1 és 0,3 közötti, és segédeszközzel olvasnak; az aliglátók, 0,01 és 0,1 közötti látásélességgel, akik speciális módszereket igényelnek; és a vakok, akiknél a látásélesség 0,01 alatti, vagy egyáltalán nincs fényérzékelés, és náluk a tapintó és halló csatorna dominál. Okai lehetnek veleszületettek, genetikai vagy embrionális fejlődési zavar, vagy szerzettek, baleset vagy betegség, mint a glaukóma, a diabéteszes retinopátia vagy a szürkehályog következtében.
+
+A vakok speciális olvasás-írástanítási eszköze a Braille-írás, amelyet Louis Braille dolgozott ki 1829-ben: ez egy domborpontos írás- és olvasásrendszer, hat pont hatvannégy kombinációjával jelöl betűket, számokat és zenét is. Mellette használatosak a nagy és kis hatrekeszes dobozok, a gombás és szöges táblák, valamint a Braille-írógép is. A tájékozódást segítő eszközök közé tartozik a fehér bot, a tájékozódási képzés, amely mentális térkép kialakítását jelenti, a vakvezető kutya, az auditív jelzők és a GPS-alapú okostelefonos alkalmazások is.
+
+A vak gyermek mozgásfejlődése jellemzően lassabb, mert hiányzik a vizuális motiváció, vagyis a látvány, ami a fordulásra, mászásra, járásra ösztönözné, ezért speciális mozgásos stimuláció szükséges. Megjelenhet náluk az úgynevezett lereagáló mozgás is, vagyis sztereotip, repetitív mozgás, például ringatózás, ami a szenzoros inputtól való megfosztottság kompenzálása. Nyelvi fejlődésük gyakran jó verbális képességekkel jár, mert a hallás és a kommunikáció kompenzálja a látáshiányt, de megjelenhet a verbalizmus jelensége: a vak gyermek sok olyan szót és fogalmat tanul meg, amelyhez nincs valódi tapasztalata – például tudja, mi az, hogy 'kék', de soha nem látta.
+
+A vakok oktatásában a fejlesztésnek figyelembe kell vennie a látássérülés fokát: gyengénlátóknál kontrasztos, nagyított nyomtatás és jó megvilágítás, aliglátóknál auditív anyagok és tapintás, vakoknál teljesen tapintásos és auditív csatornák szükségesek. Megfelelő adaptációkkal – akadálymentesítéssel, segédeszközökkel, kísérő pedagógussal – az óvodai és iskolai integráció is megvalósítható, a Vakok Általános Iskolája pedig speciálisan képzett szakembereivel az optimális fejlesztést biztosítja. A modern technika is sok segítséget nyújt: képernyőolvasó szoftverek, mint a JAWS vagy az NVDA, Braille-kijelző, hangoskönyvek, hangvezérlésű okostelefon és nagyítók.
+
+A látás elvesztésének, vagyis a szerzett vakságnak komoly pszichés hatása van: a gyász, a tagadás, a harag és a depresszió normális reakciók, ezért pszichológiai támogatás és rehabilitáció szükséges. A vak gyermekkel való kommunikáció során mindig szóval kell jelezni a jelenlétünket – például 'Én vagyok, Péter' –, érintés előtt figyelmeztetni kell, a környezetet szóban kell leírni, és nem mutogatni, hanem elmondani kell a dolgokat.`,
     kartya: [
       { k: "Mi a látássérülés fogalma?", v: "A látóélesség és/vagy látótér károsodása, amely az egyén mindennapi tevékenységeit, tanulását és tájékozódását korlátozza." },
       { k: "Milyen csoportjai vannak a látássérülteknek?", v: "1. Gyengénlátók (látóélesség 0,1-0,3): segédeszközzel olvasnak. 2. Aliglátók (0,01-0,1): speciális módszerekkel. 3. Vakok (0,01 alatti vagy nincs fényérzékelés): tapintó és halló csatornák dominálnak." },
@@ -1189,6 +1548,15 @@ const tetelek = [
     id: 20,
     cim: "Hallássérülés",
     tetelSzoveg: "Ismertesse a hallássérülés fogalmát, okait, tüneteit, csoportjait! Mutassa be a hallássérültek nevelésének, oktatásának, gondozásának főbb jellemzőit! Ismertesse a hallássérülés hatásait a gyermek személyiségfejlődésére!",
+    teljesLeiras: `A hallássérülés a hallás funkcionális károsodása, amely a kommunikáció, a nyelvfejlődés és a szociális beilleszkedés területein jelent nehézséget. Két fő csoportja van: a nagyothallók, akiknél enyhe-súlyos fokú a hallásveszteség, és hallókészülékkel kommunikálnak, valamint a süketek, akiknél nagyon súlyos a veszteség, és számukra a jelnyelv a fő kommunikációs forma. A halláscsökkenés fokozatai: enyhe huszonhat-negyven decibel, közepes negyvenegy-ötvenöt decibel, közepesen súlyos ötvenhat-hetven decibel, súlyos hetvenegy-kilencven decibel, és nagyon súlyos kilencvenegy decibel felett.
+
+Fontos megkülönböztetni a prelingvális hallássérülést, amely a nyelv elsajátítása előtt, három éves kor előtt következik be, és a legkomolyabb hatással van a nyelvfejlődésre és a kommunikációra, valamint a posztlingvális hallássérülést, amely a nyelv elsajátítása után jelentkezik, ekkor a korábban elsajátított hangzó nyelvi készségek részben megmaradnak. A hallássérülés főbb okai lehetnek örökletesek, intrauterin fertőzés, mint a rubeola, szülési komplikáció, korai gyermekkori betegség, mint a meningitis, gyógyszerek mellékhatása, vagy zajártalom.
+
+A jelnyelv vizuális-téri nyelv, amelyet kézjelek, arckifejezés és testmozgás kombinációjával használnak – teljes értékű, önálló nyelv, nem pusztán az orális nyelv vizuális kódja. A szájról olvasás, vagyis a szájmozgás megfigyeléséből történő jelentésazonosítás önmagában nehéz és megbízhatatlan, mivel sok hang azonosan látszik a szájon. A hallókészülék elektronikus eszköz, amely felerősíti a hangokat, és segít a nagyothallóknak, de süketeknél önmagában nem elegendő – számukra a cochleáris implantátum jelenthet megoldást, amely beültetett elektronikus eszközként közvetlenül a hallóideget stimulálja, és különösen korai beültetés esetén lehetővé teszi a hangok érzékelését.
+
+A hallássérülés hatása a személyiségfejlődésre kettős lehet: egyrészt elszigeteltség érzése, kommunikációs frusztráció és alacsonyabb önértékelés alakulhat ki, másrészt erős süket közösségi identitás is kialakulhat – a süket kultúra fogalma azt fejezi ki, hogy a süketek saját közösséget, nyelvet és kultúrát alakítottak ki, és a süketséget sokan nem betegségként, hanem identitásként élik meg.
+
+A gondozási feladatok közé tartozik a hallókészülék karbantartása, a fülhigiénia, a halló környezettel való kommunikáció segítése, a jelnyelv ismerete és a vizuális figyelem fejlesztése. A hallássérült gyermeknél való bejelentkezés vizuális jelzéssel, integetéssel vagy vállra érintéssel történik, nem szabad hátulról megszólítani, biztosítani kell a szemkontaktust és a jól megvilágított arcú kommunikációt. A bilingvális megközelítés a jelnyelv és a hangzó vagy írásos nyelv párhuzamos oktatását jelenti, ahol a jelnyelv az anyanyelv, a hangzó nyelv pedig az írásbeliség fejlesztését segíti. Az oktatás formái lehetnek a speciális iskola, az integrált nevelés hallókkal, vagy speciális osztály az általános iskolában.`,
     kartya: [
       { k: "Mi a hallássérülés fogalma?", v: "A hallás funkcionális károsodása, amely a kommunikáció, a nyelvfejlődés és a szociális beilleszkedés területein jelent nehézséget." },
       { k: "Milyen csoportjai vannak a hallássérülteknek?", v: "1. Nagyothallók (enyhe-súlyos fokú veszteség): hallókészülékkel kommunikálnak. 2. Süketek (nagyon súlyos veszteség): jelnyelv a fő kommunikáció." },
@@ -1224,6 +1592,17 @@ const tetelek = [
     id: 21,
     cim: "Mozgáskorlátozottság",
     tetelSzoveg: "Ismertesse a mozgáskorlátozottság fogalmát, okait, típusait! Mutassa be a mozgáskorlátozottak nevelésének, oktatásának, gondozásának főbb jellemzőit, speciális eszközeit! Ismertesse a mozgáskorlátozottság hatásait a személyiség fejlődésére!",
+    teljesLeiras: `A mozgáskorlátozottság a mozgásszervek károsodásából vagy elégtelen működéséből eredő állapot, amely a mozgás, az önkiszolgálás és a kommunikáció területén hoz létre funkciózavarokat. Okai lehetnek veleszületettek, mint az agybénulás vagy a végtaghiány, szerzettek, mint a baleset, a betegség vagy a daganat, vagy degeneratívak, mint az izombetegségek.
+
+Az agybénulás, vagyis a cerebrális parézis a fejlődő agy nem progresszív károsodása, amely mozgásbeli és koordinációs zavarokat okoz, oka lehet szülési oxigénhiány, koraszülöttség vagy intrauterin fertőzés. Típusai a spasztikus forma, amelyre az izmok merevsége jellemző, az athetoid vagy diszkinetikus forma, amelyre a kontrollálatlan mozgások jellemzők, az ataxiás forma, amelyre az egyensúlyzavar jellemző, valamint a kevert típus. A végtagredukció veleszületett vagy szerzett, teljes vagy részleges végtaghiány, amelyet protézis, ortézis és speciális segédeszközök kompenzálhatnak. A petyhüdt bénulás a perifériás idegrendszer sérülése okozta bénulás, amelynél az izmok elvesztik tónusukat és sorvadhatnak, például gerincvelő-sérülés esetén.
+
+A mozgáskorlátozottság hatása a személyiségfejlődésre attól is függ, hogy veleszületett vagy szerzett-e: veleszületett esetben a sérülés az identitás szerves részévé válik, szerzett esetben a gyász, a harag és a depresszió normális reakciók – mindkét esetben az elfogadás folyamata kulcsfontosságú. Fontos hangsúlyozni, hogy a mozgáskorlátozottság nem jár szükségszerűen intellektuális érintettséggel: cerebrális parézis esetén is lehet normál, sőt kiemelkedő intellektus.
+
+Speciális taneszközei közé tartoznak a speciális íróeszközök, a gombalakos ceruza, a dőlt munkafelület, a könyöktámasz, valamint a szájjal vagy szemmel vezérelt számítógép és az érintőképernyő. Gyógyászati segédeszközei a tolókocsi – manuális vagy elektromos –, a járókeret, a cipekedő, a protézis, az ortézis és a speciális ülőbetét vagy matrac. A konduktív pedagógia, vagyis a Pető-módszer Pető András magyar fejlesztésű komplex rendszere, amelyben a mozgásfejlesztés és az oktatás integrálódik egymással, a gyermek aktív részvételével.
+
+A nevelés sajátossága a lassabb tempó biztosítása, a mozgásos akadályok elhárítása, a segédeszközök alkalmazása, az önállóság maximális biztosítása és az érzelmi biztonság megteremtése. Az akadálymentesítés a fizikai környezet átalakítása mozgáskorlátozottak számára: rámpák, liftek, szélesebb ajtók, akadálymentes vizesblokk és speciális bútorok. Speciális gondozási feladat a pozicionálás, vagyis a megfelelő testhelyzet biztosítása, amely megelőzi a decubitus, vagyis a nyomásfekély kialakulását, és fenntartja a funkcionális testtartást, valamint a katéterezés, a gyógyszeradagolás és a fizikoterápia támogatása is.
+
+A komplex rehabilitáció elve szerint orvosi, gyógytornász, gyógypedagógus, szociális munkás és pszichológus segítsége együttesen szükséges. A gyógypedagógiai asszisztens segíthet a mozgásban – a tolókocsi kezelésében, az ültetésben –, az öltöztetésben és vetkőztetésben, az étkezésben, a kommunikációban, és a szükségletek azonnali jelzésében, mindeközben szem előtt tartva az önállóság maximalizálásának elvét: csak annyi segítséget adunk, amennyi valóban szükséges, mert ez a méltóság alapja.`,
     kartya: [
       { k: "Mi a mozgáskorlátozottság fogalma?", v: "Mozgásszervek károsodásából vagy elégtelen működéséből eredő állapot, amely a mozgás, az önkiszolgálás és a kommunikáció területén hoz létre funkciós zavarokat." },
       { k: "Milyen okai vannak a mozgáskorlátozottságnak?", v: "Veleszületett (agybénulás, végtaghiány), szerzett (baleset, betegség, daganat), degeneratív betegségek (izombetegségek)." },
@@ -1260,6 +1639,15 @@ const tetelek = [
     id: 22,
     cim: "Beszédfogyatékosság",
     tetelSzoveg: "Ismertesse a beszédfogyatékosság fogalmát, okait, típusait, a beszédfogyatékosok nevelésének, oktatásának, gondozásának főbb jellemzőit, speciális eszközeit, valamint a logopédiai munka higiénés feladatait! Mutassa be a beszédfogyatékosság hatásait a személyiség fejlődésére!",
+    teljesLeiras: `A beszédfogyatékosság a kommunikáció és a nyelvhasználat súlyos zavarainak összessége, amelyek a szokásos pedagógiai eszközökkel nem kezelhetők, és speciális logopédiai segítséget igényelnek. Okai lehetnek organikusak, mint az agysérülés, a szájüregi rendellenesség vagy a halláscsökkenés, funkcionálisak, mint a pszichés vagy környezeti tényezők, vagy ezek kombinációja.
+
+A beszédfogyatékosság főbb típusai a beszédfejlődés elmaradása, a hangzáshibák, mint a pöszeség vagy az orrhangzósság, a hangképzési zavarok, vagyis a dysfonia, a folyamatosság zavarai, mint a dadogás és a hadarás, az afázia, valamint a mutizmus. A dadogás a beszéd folyamatosságának zavara, amelyet ismétlések, nyújtások és blokkok jellemeznek – a stressz fokozza, a nyugodt légkör csökkenti a tüneteit. A hadarás túl gyors, ritmustalan, nehezen érthető beszéd, amelynél a gondolat mintegy megelőzi az artikulációt – ezt sokszor maga a hadaró sem veszi észre. A pöszeség a hangok hibás képzése, például amikor a gyermek 's' helyett 'sz'-t, vagy 'r' helyett 'l'-t ejt, és logopédiai terápiával korrigálható. A hangképzési zavar, vagyis a dysfonia a hang minőségének, magasságának vagy erősségének zavara, ami rekedtségben, hangelvesztésben vagy kettős hangban nyilvánulhat meg, oka lehet a gége sérülése vagy funkcionális tényező. Az afázia agysérülés, például stroke után fellépő állapot, amikor a már megtanult nyelv elvész: a személy nem tud szólni, vagy nem érti, amit mondanak neki.
+
+A dadogás komoly hatással lehet a személyiségfejlődésre: szégyent, szorongást, elkerülő magatartást és alacsony önértékelést okozhat, de megfelelő terápiával és elfogadással ezek a hatások jelentősen csökkenthetők. A dadogó gyermeknél a segítő legfontosabb feladata, hogy türelmesen megvárja a mondanivalóját, ne fejezze be helyette a mondatot, ne siettesse, tartsa fenn a szemkontaktust, és ne reagáljon külön a dadogásra.
+
+A logopédiai fejlesztést minél korábban érdemes elkezdeni, mert az idegrendszeri plaszticitás miatt a korai fejlesztés a leghatékonyabb. Logopédiai vizsgálatra akkor érdemes fordulni, ha a gyermek kétévesen nem mond szavakat, hároméves korban nem alkot mondatokat, vagy ötéves korban nehezen érthető a beszéde. A kommunikatív kompetencia fogalma nemcsak a helyes grammatikát jelenti, hanem a megfelelő szociális helyzetben való hatékony kommunikáció képességét is, amit szintén a logopédiai munka fejleszt.
+
+A logopédiai munka higiénés feladatai közé tartozik a száj- és fülüreg higiéniájának figyelemmel kísérése: ezek elhanyagolása fülgyulladáshoz vagy fogínygyulladáshoz vezethet, amelyek tovább ronthatják a halló- és beszédfunkciókat. Szoros a kapcsolat a hangos olvasás és a logopédiai munka között is: az olvasástanulás megerősíti az artikulációs mozgásokat, ezért a logopédus és a pedagógus összehangoltan dolgozik az olvasásfejlesztésben.`,
     kartya: [
       { k: "Mi a beszédfogyatékosság fogalma?", v: "A kommunikáció és a nyelvhasználat súlyos zavarainak összessége, amelyek a szokásos pedagógiai eszközökkel nem kezelhetők, speciális logopédiai segítséget igényelnek." },
       { k: "Mik a beszédfogyatékosság okai?", v: "Organikus (agysérülés, szájüreg rendellenesség, halláscsökkenés), funkcionális (pszichés, környezeti), kevert." },
@@ -1295,6 +1683,17 @@ const tetelek = [
     id: 23,
     cim: "Autizmus spektrumzavar",
     tetelSzoveg: "Mutassa be az autizmus spektrumzavar fogalmát, okait, kritériumait, nevelésük, oktatásuk főbb jellemzőit! Ismertesse az autizmus spektrumzavar pszichológiai hátterét, sajátosságait! Mutassa be a protetikus környezet fogalmát, eszközeit!",
+    teljesLeiras: `Az autizmus spektrumzavar a fejlődés átható, neurológiai alapú zavara, amely a szociális kommunikáció és interakció, valamint a rugalmas viselkedés és érdeklődés területén okoz jellemző nehézségeket. Pervazív, vagyis átható fejlődési zavarról van szó, ami azt jelenti, hogy nem egy-egy területet érint, hanem az egész személyiséget befolyásolja. A diagnózis két fő kritériumon alapul, amelyeknek egyszerre kell fennállniuk: tartós hiányosságok a szociális kommunikációban és interakcióban, valamint korlátozott, repetitív viselkedés, érdeklődés és tevékenység.
+
+A szociális kommunikációs nehézségek közé tartozik a szemkontaktus kerülése, az érzelmek értelmezésének nehézsége, a kölcsönös párbeszéd problémái és a nonverbális kommunikáció zavara. A repetitív viselkedés formái közé tartoznak a sztereotip mozgások, mint a kézrázás vagy a forgás, a ritualisztikus szokások, a változatlansághoz való ragaszkodás és a speciális, szűk érdeklődési körök.
+
+Az autizmus pszichológiai hátterét több hipotézis is megpróbálja magyarázni. Baron-Cohen naiv tudatelmélet-hipotézise szerint az autizmus spektrumzavarral élők nehézséget mutatnak mások elmeállapotainak, vagyis gondolatainak, szándékainak és érzéseinek megértésében. A végrehajtó működési zavar hipotézise szerint a jellemző merevség és az ismétlő viselkedés a végrehajtó funkciók – tervezés, rugalmasság, impulzusszabályozás – zavarával magyarázható. A gyenge centrális koherencia hipotézise szerint az érintettek a részletekre koncentrálnak az egész rovására – nem látják 'az erdőt a fáktól', viszont apró részleteket gyakran kiemelkedően jól észrevesznek.
+
+Fontos hangsúlyozni, hogy az autizmus spektrumzavar minden intelligenciaszinten előfordulhat, magas intelligencia esetén is, mint az Asperger-szindrómánál, és alacsonyabb intelligencia esetén is – az intelligencia és az autizmus spektrumzavar egymástól független dimenziók.
+
+A nevelés-oktatás egyik kulcsfogalma a protetikus környezet: ez egy, az autizmus spektrumzavarral élő személyre szabott fizikai és szervezeti környezet, amely kiszámítható, strukturált, és csökkenti a változásból fakadó szorongást. Eszközei közé tartozik a képes napirend, amely sorban mutatja a nap folyamán következő tevékenységeket, a tér strukturálása, vagyis hogy egy-egy tevékenységhez konkrét fizikai helyet rendelünk, az idő vizuális megjelenítése, például időzítővel, a tevékenységszervező kártyák és a zajcsillapítás. A vizuális támogatottság azt jelenti, hogy az elvárásokat, a napirendet és a szabályokat képi, rajzos, szimbolikus formában tesszük láthatóvá, hiszen az autizmus spektrumzavarral élők jellemzően vizuálisan dolgozzák fel hatékonyabban az információt. A PECS, vagyis a Picture Exchange Communication System egy képkártyák cseréjén alapuló kommunikációs rendszer azoknak, akik nonverbálisak vagy keveset kommunikálnak szóban.
+
+A rutinok és rituálék fenntartása biztonságot ad, mert a változtatás intenzív szorongást okozhat, ezért minden változásra előzetes felkészítés szükséges. Sok autizmus spektrumzavarral élő embernek érzékszervi feldolgozási különbségei is vannak: lehet hiperszenzitív, amikor a hangok fájdalmasan erősnek tűnnek, vagy hiposzenzitív, amikor érzéketlenebb a tapintásra. Az ABA-terápia, vagyis az Applied Behavior Analysis viselkedéselemzésen alapuló, intenzív fejlesztési módszer, amely megerősítéssel tanítja a kívánt viselkedéseket. Az oktatási formák lehetnek speciális autizmus-iskola, integrált osztály autizmus-specifikus módszerekkel, vagy egyéni fejlesztés, a szint és az igények alapján. Az autizmus spektrumzavarral élő gyermekkel való kommunikáció során egyértelműen, konkrétan, rövid mondatokban, vizuális kiegészítéssel kell beszélni, kerülve a nem szó szerint értendő kifejezéseket, mint az irónia vagy a metafora, és mindig türelemmel.`,
     kartya: [
       { k: "Mi az autizmus spektrumzavar (ASZ)?", v: "A fejlődés átható neurológiai zavara, amely a szociális kommunikáció és interakció, valamint a rugalmas viselkedés és érdeklődés területein okoz jellemző nehézségeket." },
       { k: "Mi a fejlődési zavar (pervazív zavar) fogalma?", v: "Átható, az egész személyiséget érintő fejlődési zavar – nem egy-egy területet érint, hanem az összes pszichikus funkciót befolyásolja." },
@@ -1331,6 +1730,15 @@ const tetelek = [
     id: 24,
     cim: "Diszlexia, diszgráfia, diszkalkulia, Meixner-módszer",
     tetelSzoveg: "Ismertesse a diszlexia, diszgráfia, és a diszkalkulia fogalmakat, jellemezze tüneteiket, valamint nevelésük, oktatásuk főbb jellemzőit! Mutassa be a Meixner-módszer sajátosságait!",
+    teljesLeiras: `A diszlexia átlagos vagy átlag feletti intelligencia mellett fennálló, neurológiai alapú, specifikus olvasási nehézség, amely a betű-hang megfeleltetés, a szófelismerés és a szövegértés területén jelentkezik. Tünetei közé tartozik a lassú és pontatlan olvasás, a betűcsere, a kihagyás vagy beillesztés, a szótagolás nehézsége, a gyenge szövegértés és az elmaradott helyesírás. Neurológiai háttere a fonológiai feldolgozás zavarában, valamint a bal agyfélteke olvasási régiójának eltérő működésében keresendő, ami genetikailag is meghatározott, és strukturális eltérések MRI-vizsgálattal is kimutathatók. Fontos elhatárolni az általános tanulási nehézségtől: a diszlexia esetében a normális intelligencia ellenére áll fenn egy specifikus olvasási zavar, míg az általános tanulási nehézség több területet érint, és gyakran intellektuális érintettséggel is jár.
+
+A diszgráfia szintén neurológiai alapú, specifikus írászavar, amelynél az írástechnika és az írásbeli kifejezés tartósan nehezített, a motoros koordináció és a fonetikai kódolás zavarai miatt. Tünetei az olvashatatlan írás, a betűk és számok tükrözése, a szabálytalan betűméret, a nagyon lassú írástempó és a tollal való nehéz bánásmód. A diszkalkulia neurológiai alapú, specifikus számolási és matematikai képességzavar, amely az aritmetikai alapműveletek, a számfogalom és a matematikai gondolkodás területén jelentkezik, normál intelligencia mellett – tünetei a számjegyek tükrözése, a rossz helyiérték-kezelés, a műveletek sorrendjének felcserélése, a matematikai fogalmak megértésének nehézsége és a szöveges feladatok megoldásának nehézsége.
+
+A Meixner-módszert Meixner Ildikó dolgozta ki, kifejezetten a diszlexiára hajlamos és diszlexiás gyermekek olvasás- és írástanítására. Alapelvei a hangonkénti tanítás, a játékos-mesés keretezés, a homogén gátlás csökkentése, a fokozatosság, a sok ismétlés és a multiszenzoros feldolgozás. A homogén gátlás azt jelenti, hogy a hasonló hangok – például p-b vagy d-t – egymáshoz közeli tanítása interferenciát, vagyis zavart okoz, ezért a Meixner-módszer ezeket szándékosan eltávolítja egymástól az oktatás sorrendjében. A hármas asszociáció elve a betű-hang megfeleltetés kialakítását jelenti három érzékszervi csatornán egyszerre: a látás – a betű –, a hallás – a hang – és a mozgás – az írás és az artikuláció mozgása – együttesen erősítik meg a tanulást.
+
+A diszlexia prevenciója azt jelenti, hogy az óvodáskorban azonosítható kockázati tényezőket korai logopédiai és fejlesztő beavatkozással csökkenthetjük, még mielőtt az olvasástanítás elkezdődne, a reedukáció pedig a már kialakult olvasási zavar logopédiai terápiáját jelenti, vagyis az olvasási mechanizmus újratanítását speciális módszerekkel. A diszlexiás tanuló törvényi jogosultságai közé tartozik az időkedvezmény, a szóbeli felelet elfogadása írásbeli helyett, az értékelési könnyítések, és a segédeszközök, mint a számítógép vagy a szövegfelolvasó program használata. A diszkalkuliás tanulót számegyenes, abakusz, manipulatív eszközök, számológép felsőbb osztályban, táblázatok és vizuális segédletek segíthetik.
+
+A gyógypedagógiai asszisztens diszlexiás gyermeknél a feladatokat szóban is elmagyarázza, az írást részben más feladatformával váltja ki, türelmesen visszaolvas, és nem sürgeti, nem kelt szégyenérzetet a gyermekben. Az olvasástanítás multiszenzoros megközelítése – a látás, a hallás, a tapintás és a mozgás egyidejű bevonása – minden csatornán erősít, így a gyenge csatornát is kompenzálni tudja. A diszlexiás gyermek önértékelés-problémáinak kezelésében kulcsfontosságú a sikerélmények biztosítása, az erősségek kiemelése, a zavarról szóló nyílt, nem megbélyegző kommunikáció, és a kortársak elfogadásának elősegítése.`,
     kartya: [
       { k: "Mi a diszlexia?", v: "Átlagos vagy átlag feletti intelligencia mellett fennálló, neurológiai alapú, specifikus olvasási nehézség – a betű-hang megfeleltetés, a szófelismerés és a szövegértés területén." },
       { k: "Mik a diszlexia tünetei?", v: "Lassú és pontatlan olvasás, betűcsere, kihagyás, beillesztés, szótagolás nehézsége, gyenge szövegértés, elmaradott helyesírás." },
@@ -1367,6 +1775,15 @@ const tetelek = [
     id: 25,
     cim: "Súlyos-halmozott fogyatékosság, fejlesztő nevelés",
     tetelSzoveg: "Mutassa be a súlyos-halmozott fogyatékosság fogalmát, okait, valamint nevelésük, gondozásuk főbb jellemzőit! Ismertesse a fejlesztő nevelés, gondozás területeit, alapelveit!",
+    teljesLeiras: `A súlyos-halmozott fogyatékosság két vagy több fogyatékosság egyidejű fennállását jelenti, amelyek együttesen súlyos mértékben korlátozzák az önálló tevékenységet, a kommunikációt és az önkiszolgálást. Okai jellemzően genetikaiak, mint az Angelman-szindróma vagy a Rett-szindróma, pre- és perinatális agykárosodás, metabolikus betegségek vagy infekciók – legtöbbször organikus eredetűek. A súlyos-halmozottan fogyatékos személynél a verbális kommunikáció legtöbbször nem alakul ki, ezért a fő kommunikációs formát a nonverbális jelzések – hangok, mimika, gesztusok, testmozgás – jelentik.
+
+A fejlesztő nevelés-oktatás célkitűzése ezeknél a tanulóknál nem a tantárgyi tudás, hanem az alapvető készségek, funkciók és az életminőség javítása a kommunikáció, a mozgás, az önkiszolgálás, valamint az érzékelés-észlelés területén. A fejlesztő nevelés hat fő területe a kommunikáció, a mozgás, az érzékelés-észlelés, a kreativitás, a szociális kapcsolatok és az önkiszolgálás. A fejlesztő gondozás területei az ürítés segítése, a tisztálkodás, az öltözés-vetkőzés, az étkezés, a pozicionálás, a gyógyszerelés és a bőrápolás – tehát minden napi tevékenység támogatása.
+
+A fejlesztő nevelés alapelvei a holisztikus szemlélet, az egyénre szabottság, a következetesség, az aktivitás prioritása, a família bevonása, az interdiszciplináris együttműködés és a méltóság tisztelete. A szenzoros stimuláció tudatos érzékszervi ingerek nyújtását jelenti – hang, fény, tapintás, szag, mozgás –, célja a megismerő funkciók aktiválása és az öröm szerzése. Ehhez kapcsolódik a Snoezelen módszer, amely multiszenzoros terápiás eljárás: speciális helyiségben hang-, fény-, szag- és tapintásingerek kombinálásával nyugalmat, örömöt és élményt nyújtunk. A basale stimuláció Fröhlich és Bienstein nevéhez fűződő módszer, amely az alapvető testérzékelés, a légzés és a mozgásészlelés tudatos stimulálását jelenti korlátozott képességű személyeknél.
+
+Az étkezés segítésénél fontos a megfelelő testhelyzet biztosítása, az ételkonzisztencia – esetenként pépes étel – kiválasztása, a speciális evőeszközök használata, a lassú etetés, és az aspiráció megelőzése: az aspiráció azt jelenti, hogy étel, ital vagy nyál véletlenül a légutakba kerül, ami súlyos esetben tüdőgyulladást vagy fulladást okozhat, ezért étkezésnél kiemelt figyelmet igényel. Az ürítés segítésének speciális feladatai a rendszeres ültetés a WC-re, az ürítési jelzések figyelése, a pelenkacsere megfelelő technikája és a bőrápolás a bőrkárosodás megelőzésére. Az öltözés-vetkőzés során az aktív részvétel minden apró mozzanatát ösztönözni kell – akár csak annyit is, hogy a gyermek felemeli a kezét öltöztetéskor.
+
+A 'legkisebb ellenállás' elve azt jelenti, hogy a gondozást a személy ritmusára és jelzéseire igazítjuk, nem a gondozó kényelméhez – ez egy empatikus, személyre szabott gondozási szemlélet. A súlyos-halmozottan fogyatékos személyek is tankötelesek, amit a fejlesztő nevelés-oktatás keretében, iskolai vagy akár otthoni ellátás formájában teljesíthetnek. Életútjuk jellemzően a korai fejlesztéstől a fejlesztő nevelés-oktatáson át a felnőttkori intézményi ellátásig – lakóotthon, nappali intézmény – majd a speciális idősellátásig vezet. A família bevonása kiemelten fontos: a szülők megtanulják a fejlesztési módszereket, beépítik az otthoni rutinba, és visszajelzést adnak a szakembereknek. A zene terápiás szerepe is jelentős, mert ott is emocionális reakciókat tud kiváltani, ahol a verbális kommunikáció nem lehetséges – örömet, nyugalmat és kommunikációt segíthet elő. A fejlesztő nevelés eredményeit rendszeres megfigyelési naplóval, fényképes vagy videós dokumentációval, és az egyéni fejlesztési terv rendszeres felülvizsgálatával követjük nyomon.`,
     kartya: [
       { k: "Mi a súlyos-halmozott fogyatékosság fogalma?", v: "Két vagy több fogyatékosság egyidejű fennállása, amelyek együttesen súlyos mértékben korlátozzák az önálló tevékenységet, kommunikációt és önkiszolgálást." },
       { k: "Mik a súlyos-halmozott fogyatékosság okai?", v: "Genetikai (Angelman-szindróma, Rett-szindróma), pre- és perinatális agykárosodás, metabolikus betegségek, infekciók – legtöbbször organikus ok." },
@@ -1402,6 +1819,17 @@ const tetelek = [
     id: 26,
     cim: "Aktivitás és figyelem zavarai – ADHD",
     tetelSzoveg: "Mutassa be az aktivitás és a figyelem zavarait! Ismertesse a hiperaktivitás, a figyelemzavar és az impulzivitás fogalmakat, jellemezze tüneteiket! Értelmezze nevelésük, oktatásuk, beilleszkedésük sajátosságait!",
+    teljesLeiras: `Az ADHD, vagyis a figyelemhiányos hiperaktivitászavar neurológiai alapú fejlődési zavar, amely a figyelemben, az aktivitásban és az impulzuskontrollban okoz tartós nehézséget. Három fő tünetcsoportja van. A figyelemzavar azt jelenti, hogy a gyermek nem tudja tartósan egy dologra tartani a figyelmét – nem szándékosan kalandozik el, hanem az agya nehezebben tartja fókuszban az ingereket. A hiperaktivitás a fokozott, gyakran célnélküli mozgásigényt jelenti – mintha 'motort raktak volna bele' –, nehezen ül csendben, gyakran felkel, izeg-mozog. Az impulzivitás gátlási nehézség: a gyermek cselekszik, mielőtt gondolkodna, közbeszól, nem várja meg a sorát, és könnyen kerül kockázatos helyzetekbe.
+
+Az ADHD tünetei életkoronként eltérő képet mutatnak. Kisgyermekkorban motoros nyugtalanság, gyakori balesetek, várakozási nehézség, türelmetlenség, érzelmi ingerlékenység és a szabálykövetés nehézségei jellemzők. Iskoláskorban előtérbe kerül a feladatszervezési nehézség, a felejtés, az elveszett tárgyak, a tanórai figyelmetlenség és a hosszú feladatokon való végigmenés képtelensége. Serdülő- és felnőttkorban a rizikómagatartás, az iskolai alulteljesítés, a szervezési és időbeosztási nehézségek, valamint a kapcsolati feszültségek kerülnek előtérbe.
+
+Neurológiai háttere a prefrontális kéreg, vagyis a végrehajtó funkciókért felelős agyterület, valamint a dopaminerg rendszer eltérő működésében keresendő, és genetikailag is meghatározott, tehát öröklődhet. Fontos hangsúlyozni, hogy az ADHD önmagában nem csökkenti az intelligenciát, viszont a figyelemzavar és a végrehajtó funkciók gyengesége erősen ronthatja az iskolai teljesítményt.
+
+Az ADHD-s gyermek beilleszkedését is jelentősen befolyásolja az állapot: az impulzív viselkedés és a szabályszegés zavarhatja a társakat, ezért a gyermek sokszor kiszorul a csoportból – emiatt a szociális készségek célzott fejlesztése kulcsfontosságú. A nevelés leghatékonyabb eszközei a következetes, kiszámítható struktúra, a rövid feladatok, az azonnali visszajelzés, a sok mozgáslehetőség, a feladatok kisebb egységekre bontása és a pozitív megerősítés: az ADHD-s gyermek büntetés helyett sokkal jobban reagál jutalomra, ezért az elvárt viselkedést azonnali, konkrét dicsérettel érdemes megerősíteni.
+
+Az iskolai gyakorlatban gyakran segít, ha az ADHD-s gyermek az első sorban, a tanár közelében, háttal az ablaknak ül, mert ez csökkenti az elterelő ingereket, és érdemes elkerülni a zajos padszomszédot is. A gyógypedagógiai asszisztens a feladatok kisebb részekre bontásával, időmérő használatával, vizuális tervezővel, mozgáslehetőség biztosításával, azonnali visszajelzéssel és az érzelmi szabályozás segítésével támogathatja a gyermeket. Súlyosabb esetben a gyógyszeres kezelés is szóba jöhet: a metilfenidát és más szerek a dopaminerg rendszert segítik, csökkentve a figyelmetlenséget és a hiperaktivitást, de ennek szükségességéről mindig az orvos dönt.
+
+Fontos eloszlatni az ADHD-val kapcsolatos tévhiteket is: nem igaz, hogy 'csak figyelni kellene', hiszen ez egy neurológiai zavar, nem lustaság; nem igaz, hogy a gyermek 'kinövi', mert felnőttkorban is fennmaradhat; és nem igaz, hogy minden hiperaktív gyermeknek ADHD-ja van. Az iskola az egyéni fejlesztési terv, az értékelési könnyítések, az időkedvezmény és az asszisztensi segítség eszközeivel tudja kezelni az ADHD-s tanuló nehézségeit. A hiperaktív gyermek komoly stresszt jelenthet a famíliának is: a szülők gyakran kimerülnek, és a testvérkapcsolat is megsínylheti, ezért a szülőtámogatás és a szülői tréning a kezelés fontos részét képezi. A kommunikáció során rövid, egyértelmű utasításokat érdemes adni, szemkontaktust biztosítani, az utasítást szükség esetén megismételni, visszakérdezni – 'mutasd meg, mit kell csinálni' –, és mindvégig következetesnek maradni.`,
     kartya: [
       { k: "Mi az ADHD fogalma?", v: "Attention Deficit Hyperactivity Disorder – figyelemhiányos hiperaktivitászavar. Neurológiai alapú fejlődési zavar, amely a figyelemben, az aktivitásban és az impulzuskontrollban okoz tartós nehézséget." },
       { k: "Mik az ADHD típusai?", v: "1. Elsősorban figyelemzavar típus (ADD). 2. Elsősorban hiperaktív-impulzív típus. 3. Kombinált típus (legelterjedtebb)." },
@@ -1435,75 +1863,274 @@ const tetelek = [
   }
 ];
 
+// ===================== FEJEZETEK =====================
+const fejezetek = [
+  {
+    romaiSzam: "I",
+    nev: "Pedagógiai alapismeretek",
+    leiras: "Nevelés, oktatás, a tanítás-tanulás folyamata és a sajátos nevelési igény alapfogalmai.",
+    tetelIds: [1, 2, 3, 4, 5]
+  },
+  {
+    romaiSzam: "II",
+    nev: "Pszichológiai alapismeretek",
+    leiras: "Személyiségfejlődés, fejlődéslélektan, szociálpszichológia és nevelési stílusok.",
+    tetelIds: [6, 7, 8, 9, 10, 11, 12, 13, 14]
+  },
+  {
+    romaiSzam: "III",
+    nev: "Gyógypedagógia alapjai",
+    leiras: "A gyógypedagógia fogalma, a szakértői bizottsági munka és a korai fejlesztés.",
+    tetelIds: [15, 16]
+  },
+  {
+    romaiSzam: "IV",
+    nev: "Fogyatékosság-specifikus ismeretek",
+    leiras: "Az egyes fogyatékossági területek (tanulásban akadályozottság, érzékszervi, mozgás-, beszéd-, autizmus spektrumzavar, tanulási zavarok, súlyos-halmozott fogyatékosság, ADHD) jellemzői és nevelési-oktatási sajátosságai.",
+    tetelIds: [17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+  }
+];
+
 // ===================== STATE =====================
 let currentTetelId = 1;
 let currentTab = 'kartya';
 let flippedCards = new Set();
+let currentView = 'home'; // 'home' | 'fejezet' | 'tetel'
+let currentFejezetIdx = null;
 
 // ===================== INIT =====================
 function init() {
-  // Populate sidebar
+  // Populate sidebar: Főoldal link + fejezetenként csoportosított tételek
   const sidebarList = document.getElementById('sidebarList');
-  tetelek.forEach(t => {
-    const item = document.createElement('div');
-    item.className = 'sidebar-item' + (t.id === currentTetelId ? ' active' : '');
-    item.innerHTML = `<span class="num">${t.id}.</span><span>${t.cim}</span>`;
-    item.onclick = () => selectTetel(t.id);
-    sidebarList.appendChild(item);
+  sidebarList.innerHTML = '';
+
+  const homeItem = document.createElement('div');
+  homeItem.className = 'sidebar-item home-item';
+  homeItem.id = 'sidebar-home';
+  homeItem.innerHTML = `<span class="num">🏠</span><span>Főoldal – fejezetek</span>`;
+  homeItem.onclick = () => selectHome();
+  sidebarList.appendChild(homeItem);
+
+  fejezetek.forEach((fej, fIdx) => {
+    const header = document.createElement('div');
+    header.className = 'fejezet-header';
+    header.id = `sidebar-fejezet-${fIdx}`;
+    header.innerHTML = `<span>${fej.romaiSzam}. ${fej.nev}</span><span class="fejezet-count">${fej.tetelIds.length}</span>`;
+    header.onclick = () => selectFejezet(fIdx);
+    sidebarList.appendChild(header);
+
+    fej.tetelIds.forEach(tid => {
+      const t = tetelek.find(x => x.id === tid);
+      if (!t) return;
+      const item = document.createElement('div');
+      item.className = 'sidebar-item';
+      item.id = `sidebar-tetel-${t.id}`;
+      item.innerHTML = `<span class="num">${t.id}.</span><span>${t.cim}</span>`;
+      item.onclick = () => selectTetel(t.id);
+      sidebarList.appendChild(item);
+    });
   });
 
-  // Populate select
+  // Populate select (fejezetenkénti optgroup-okkal)
   const sel = document.getElementById('tetelSelect');
-  tetelek.forEach(t => {
-    const opt = document.createElement('option');
-    opt.value = t.id;
-    opt.textContent = `${t.id}. ${t.cim}`;
-    sel.appendChild(opt);
+  sel.innerHTML = '<option value="home">– Főoldal –</option>';
+  fejezetek.forEach(fej => {
+    const og = document.createElement('optgroup');
+    og.label = `${fej.romaiSzam}. ${fej.nev}`;
+    fej.tetelIds.forEach(tid => {
+      const t = tetelek.find(x => x.id === tid);
+      if (!t) return;
+      const opt = document.createElement('option');
+      opt.value = t.id;
+      opt.textContent = `${t.id}. ${t.cim}`;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
   });
 
+  updateSidebarActive();
+  renderMain();
+  updateStats();
+}
+
+function onSelectChange(val) {
+  if (val === 'home') selectHome();
+  else selectTetel(val);
+}
+
+function updateSidebarActive() {
+  const homeEl = document.getElementById('sidebar-home');
+  if (homeEl) homeEl.classList.toggle('active', currentView === 'home');
+  fejezetek.forEach((fej, fIdx) => {
+    const header = document.getElementById(`sidebar-fejezet-${fIdx}`);
+    if (header) header.classList.toggle('active', currentView === 'fejezet' && currentFejezetIdx === fIdx);
+    fej.tetelIds.forEach(tid => {
+      const item = document.getElementById(`sidebar-tetel-${tid}`);
+      if (item) item.classList.toggle('active', currentView === 'tetel' && currentTetelId === tid);
+    });
+  });
+}
+
+function selectHome() {
+  currentView = 'home';
+  currentFejezetIdx = null;
+  document.getElementById('tetelSelect').value = 'home';
+  document.getElementById('nezet').disabled = true;
+  updateSidebarActive();
+  renderMain();
+  updateStats();
+}
+
+function selectFejezet(idx) {
+  currentView = 'fejezet';
+  currentFejezetIdx = idx;
+  document.getElementById('tetelSelect').value = 'home';
+  document.getElementById('nezet').disabled = true;
+  updateSidebarActive();
   renderMain();
   updateStats();
 }
 
 function selectTetel(id) {
+  currentView = 'tetel';
   currentTetelId = parseInt(id);
-  document.getElementById('tetelSelect').value = id;
-  document.querySelectorAll('.sidebar-item').forEach((item, idx) => {
-    item.classList.toggle('active', tetelek[idx].id === currentTetelId);
-  });
+  document.getElementById('tetelSelect').value = currentTetelId;
+  document.getElementById('nezet').disabled = false;
+  updateSidebarActive();
   flippedCards.clear();
   renderMain();
   updateStats();
 }
 
 function updateStats() {
-  const tetel = tetelek.find(t => t.id === currentTetelId);
   const totalKartya = tetelek.reduce((s, t) => s + t.kartya.length, 0);
   const totalFogalom = tetelek.reduce((s, t) => s + t.fogalmak.length, 0);
+  let context = '';
+
+  if (currentView === 'tetel') {
+    const tetel = tetelek.find(t => t.id === currentTetelId);
+    if (tetel) {
+      context = `Jelenlegi tétel kártyái: ${tetel.kartya.length} \u00a0|\u00a0 Jelenlegi tétel fogalmai: ${tetel.fogalmak.length} \u00a0|\u00a0 `;
+    }
+  } else if (currentView === 'fejezet') {
+    const fej = fejezetek[currentFejezetIdx];
+    if (fej) {
+      const tetelLista = fej.tetelIds.map(tid => tetelek.find(t => t.id === tid)).filter(Boolean);
+      const k = tetelLista.reduce((s, t) => s + t.kartya.length, 0);
+      context = `Fejezet tételei: ${tetelLista.length} \u00a0|\u00a0 Fejezet kártyái: ${k} \u00a0|\u00a0 `;
+    }
+  }
+
   document.getElementById('statsBar').innerHTML = `
     Összes tétel: ${tetelek.length} \u00a0|\u00a0 
-    Jelenlegi tétel kártyái: ${tetel ? tetel.kartya.length : '-'} \u00a0|\u00a0 
-    Jelenlegi tétel fogalmai: ${tetel ? tetel.fogalmak.length : '-'} \u00a0|\u00a0
+    ${context}
     Összes kártya: ${totalKartya} \u00a0|\u00a0
     Összes fogalom: ${totalFogalom}
   `;
 }
 
+// ===================== FŐOLDAL (fejezet kártyák) =====================
+function renderHome() {
+  let html = `
+    <div class="topic-header">
+      <h2>🎓 Tételsor áttekintés</h2>
+      <div class="tetel-szoveg">Válassz egy fejezetet! Minden fejezetnél előbb a hozzá tartozó hivatalos tételszövegeket látod, utánuk tudsz az egyes tételek tanulókártyáira és fogalomgyűjteményére kattintani.</div>
+    </div>
+    <div class="fejezet-card-grid">
+  `;
+  fejezetek.forEach((fej, idx) => {
+    const tetelLista = fej.tetelIds.map(tid => tetelek.find(t => t.id === tid)).filter(Boolean);
+    const totalKartya = tetelLista.reduce((s, t) => s + t.kartya.length, 0);
+    html += `
+      <div class="fejezet-card" onclick="selectFejezet(${idx})">
+        <div class="fejezet-card-num">${fej.romaiSzam}.</div>
+        <div class="fejezet-card-nev">${fej.nev}</div>
+        <div class="fejezet-card-leiras">${fej.leiras}</div>
+        <div class="fejezet-card-meta">${tetelLista.length} tétel · ${totalKartya} kártya</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  return html;
+}
+
+// ===================== FEJEZET ÁTTEKINTŐ (tételek a kártyák előtt) =====================
+function renderFejezetOverview(idx) {
+  const fej = fejezetek[idx];
+  if (!fej) return '<div class="empty-state">Fejezet nem található.</div>';
+  const tetelLista = fej.tetelIds.map(tid => tetelek.find(t => t.id === tid)).filter(Boolean);
+  const totalKartya = tetelLista.reduce((s, t) => s + t.kartya.length, 0);
+  const totalFogalom = tetelLista.reduce((s, t) => s + t.fogalmak.length, 0);
+
+  let html = `
+    <div class="breadcrumb">
+      <span class="breadcrumb-link" onclick="selectHome()">🏠 Főoldal</span>
+      <span class="breadcrumb-sep">›</span>
+      <span>${fej.romaiSzam}. ${fej.nev}</span>
+    </div>
+    <div class="topic-header">
+      <h2>${fej.romaiSzam}. fejezet – ${fej.nev}</h2>
+      <div class="tetel-szoveg">${fej.leiras}</div>
+    </div>
+    <div class="fejezet-meta-bar">${tetelLista.length} tétel \u00a0|\u00a0 ${totalKartya} kártya \u00a0|\u00a0 ${totalFogalom} fogalom</div>
+    <div class="fejezet-tetel-lista">
+  `;
+
+  tetelLista.forEach(t => {
+    html += `
+      <div class="fejezet-tetel-item" onclick="selectTetel(${t.id})">
+        <div class="fejezet-tetel-top">
+          <span class="fejezet-tetel-num">${t.id}. tétel</span>
+          <span class="fejezet-tetel-meta">📇 ${t.kartya.length} \u00a0 📖 ${t.fogalmak.length}</span>
+        </div>
+        <div class="fejezet-tetel-cim">${t.cim}</div>
+        <div class="fejezet-tetel-szoveg">${t.tetelSzoveg}</div>
+        <div class="fejezet-tetel-cta">Tanulókártyák megnyitása →</div>
+      </div>
+    `;
+  });
+
+  html += '</div>';
+  return html;
+}
+
+// ===================== TÉTEL RÉSZLETES NÉZET =====================
 function renderMain() {
+  const main = document.getElementById('mainContent');
+
+  if (currentView === 'home') {
+    main.innerHTML = renderHome();
+    return;
+  }
+  if (currentView === 'fejezet') {
+    main.innerHTML = renderFejezetOverview(currentFejezetIdx);
+    return;
+  }
+
   const tab = document.getElementById('nezet').value;
   const tetel = tetelek.find(t => t.id === currentTetelId);
-  const main = document.getElementById('mainContent');
 
   if (!tetel) { main.innerHTML = '<div class="empty-state">Válassz tételt!</div>'; return; }
 
+  const fejIdx = fejezetek.findIndex(f => f.tetelIds.includes(tetel.id));
+  const fej = fejezetek[fejIdx];
+
   let html = `
+    <div class="breadcrumb">
+      <span class="breadcrumb-link" onclick="selectHome()">🏠 Főoldal</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="selectFejezet(${fejIdx})">${fej ? fej.romaiSzam + '. ' + fej.nev : ''}</span>
+      <span class="breadcrumb-sep">›</span>
+      <span>${tetel.id}. tétel</span>
+    </div>
     <div class="topic-header">
       <h2>${tetel.id}. tétel – ${tetel.cim}</h2>
       <div class="tetel-szoveg">${tetel.tetelSzoveg}</div>
     </div>
     <div class="tabs">
-      <button class="tab-btn ${tab === 'kartya' ? 'active' : ''}" onclick="switchTab('kartya')">📇 Tanulókártyák (${tetel.kartya.length})</button>
+      <button class="tab-btn ${tab === 'teljes' ? 'active' : ''}" onclick="switchTab('teljes')">📝 Teljes leírás</button>
       <button class="tab-btn ${tab === 'fogalom' ? 'active' : ''}" onclick="switchTab('fogalom')">📖 Fogalomgyűjtemény (${tetel.fogalmak.length})</button>
+      <button class="tab-btn ${tab === 'kartya' ? 'active' : ''}" onclick="switchTab('kartya')">📇 Tanulókártyák (${tetel.kartya.length})</button>
       <button class="tab-btn ${tab === 'mindmap' ? 'active' : ''}" onclick="switchTab('mindmap')">🗺️ Mindmap</button>
     </div>
   `;
@@ -1541,11 +2168,26 @@ function renderMain() {
       `;
     });
     html += '</div>';
+  } else if (tab === 'teljes') {
+    html += renderTeljesLeiras(tetel);
   } else if (tab === 'mindmap') {
     html += renderMindmap(tetel.id);
   }
 
   main.innerHTML = html;
+}
+
+function renderTeljesLeiras(tetel) {
+  if (!tetel.teljesLeiras) {
+    return '<div class="empty-state">Ehhez a tételhez még nincs feltöltve teljes szöveges leírás.</div>';
+  }
+  const bekezdesek = tetel.teljesLeiras.split('\n\n').filter(p => p.trim().length > 0);
+  let html = '<div class="teljes-leiras-card">';
+  bekezdesek.forEach(p => {
+    html += `<p>${p.trim()}</p>`;
+  });
+  html += '</div>';
+  return html;
 }
 
 function switchTab(tab) {
