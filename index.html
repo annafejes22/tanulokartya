@@ -424,6 +424,61 @@
   .card-back .card-hint::before { content: '↕'; }
 
   /* TELJES LEÍRÁS (folyamatos, szóban elmondható felelet) */
+  .tts-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+    padding: 0.7rem 1rem;
+    background: var(--tag-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    max-width: 780px;
+  }
+  .tts-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 24px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .tts-btn:hover { background: #225943; transform: translateY(-1px); }
+  .tts-btn.tts-stop {
+    background: transparent;
+    color: var(--accent2);
+    border: 1.5px solid var(--accent2);
+  }
+  .tts-btn.tts-stop:hover { background: rgba(212,132,90,0.12); }
+  .tts-speed-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .tts-speed-label select {
+    padding: 0.3rem 0.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    background: var(--card-bg);
+    color: var(--text);
+  }
+  .tts-unsupported {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
   .teljes-leiras-card {
     background: var(--card-bg);
     border: 1.5px solid var(--border);
@@ -2096,6 +2151,7 @@ function renderFejezetOverview(idx) {
 
 // ===================== TÉTEL RÉSZLETES NÉZET =====================
 function renderMain() {
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   const main = document.getElementById('mainContent');
 
   if (currentView === 'home') {
@@ -2135,7 +2191,7 @@ function renderMain() {
     </div>
   `;
 
-  if (tab === 'kartya') {    html += '<div class="cards-grid">';
+  if (tab === 'kartya') {    html += renderTtsControls() + '<div class="cards-grid">';
     tetel.kartya.forEach((item, idx) => {
       const id = `card-${tetel.id}-${idx}`;
       const flipped = flippedCards.has(id) ? ' flipped' : '';
@@ -2158,7 +2214,7 @@ function renderMain() {
     });
     html += '</div>';
   } else if (tab === 'fogalom') {
-    html += '<div class="fogalmak-grid">';
+    html += renderTtsControls() + '<div class="fogalmak-grid">';
     tetel.fogalmak.forEach(item => {
       html += `
         <div class="fogalom-card">
@@ -2182,12 +2238,187 @@ function renderTeljesLeiras(tetel) {
     return '<div class="empty-state">Ehhez a tételhez még nincs feltöltve teljes szöveges leírás.</div>';
   }
   const bekezdesek = tetel.teljesLeiras.split('\n\n').filter(p => p.trim().length > 0);
-  let html = '<div class="teljes-leiras-card">';
+  let html = renderTtsControls() + '<div class="teljes-leiras-card" id="teljesLeirasContent">';
   bekezdesek.forEach(p => {
     html += `<p>${p.trim()}</p>`;
   });
   html += '</div>';
   return html;
+}
+
+function renderTtsControls() {
+  if (!('speechSynthesis' in window)) {
+    return `<div class="tts-unsupported">A böngésződ sajnos nem támogatja a felolvasás funkciót.</div>`;
+  }
+  return `
+    <div class="tts-controls">
+      <button id="ttsPlayBtn" class="tts-btn" onclick="toggleSpeech()">▶️ Felolvasás indítása</button>
+      <button id="ttsStopBtn" class="tts-btn tts-stop" onclick="stopSpeech()" style="display:none;">⏹️ Leállítás</button>
+      <label class="tts-speed-label">Sebesség:
+        <select id="ttsRate" onchange="updateSpeechRate()">
+          <option value="0.8">Lassú</option>
+          <option value="1" selected>Normál</option>
+          <option value="1.25">Gyors</option>
+        </select>
+      </label>
+    </div>
+  `;
+}
+
+// ===================== FELOLVASÁS (Web Speech API, sorba állított felolvasás) =====================
+let speechQueue = [];
+let speechQueueIndex = 0;
+let speechGapTimer = null;
+let speechIsActive = false;
+let speechIsPaused = false;
+let speechRateChanging = false;
+
+function getHungarianVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  return voices.find(v => v.lang && v.lang.toLowerCase().startsWith('hu')) || null;
+}
+
+// Felolvasandó szöveg-sor összeállítása a jelenlegi fül tartalma alapján.
+// A "pauseAfter" (ms) az adott elem után tartott szünetet adja meg –
+// a tanulókártyáknál ez teret ad a felidézésre a kérdés és a válasz között.
+function buildSpeechQueue(tab, tetel) {
+  if (tab === 'teljes') {
+    if (!tetel.teljesLeiras) return [];
+    return tetel.teljesLeiras
+      .split('\n\n')
+      .filter(p => p.trim().length > 0)
+      .map(p => ({ text: p.trim(), pauseAfter: 500 }));
+  }
+  if (tab === 'fogalom') {
+    const queue = [];
+    tetel.fogalmak.forEach(item => {
+      queue.push({ text: `${item.f}.`, pauseAfter: 400 });
+      queue.push({ text: item.m, pauseAfter: 900 });
+    });
+    return queue;
+  }
+  if (tab === 'kartya') {
+    const queue = [];
+    tetel.kartya.forEach((item, idx) => {
+      queue.push({ text: `${idx + 1}. kérdés: ${item.k}`, pauseAfter: 2500 });
+      queue.push({ text: `Válasz: ${item.v}`, pauseAfter: 1200 });
+    });
+    return queue;
+  }
+  return [];
+}
+
+function toggleSpeech() {
+  const synth = window.speechSynthesis;
+  if (!synth) return;
+
+  if (speechIsActive && !speechIsPaused) {
+    // szünet
+    speechIsPaused = true;
+    if (speechGapTimer) { clearTimeout(speechGapTimer); speechGapTimer = null; }
+    if (synth.speaking) synth.pause();
+    setTtsPlayLabel('▶️ Folytatás');
+    return;
+  }
+
+  if (speechIsActive && speechIsPaused) {
+    // folytatás
+    speechIsPaused = false;
+    setTtsPlayLabel('⏸️ Szünet');
+    if (synth.paused && synth.speaking) {
+      synth.resume();
+    } else {
+      playNextInQueue();
+    }
+    return;
+  }
+
+  // friss indítás a jelenleg aktív fül tartalmából
+  const tetel = tetelek.find(t => t.id === currentTetelId);
+  if (!tetel) return;
+  const tab = document.getElementById('nezet').value;
+  const queue = buildSpeechQueue(tab, tetel);
+  if (!queue.length) return;
+
+  speechQueue = queue;
+  speechQueueIndex = 0;
+  speechIsActive = true;
+  speechIsPaused = false;
+  playNextInQueue();
+  setTtsPlayLabel('⏸️ Szünet');
+  const stopBtn = document.getElementById('ttsStopBtn');
+  if (stopBtn) stopBtn.style.display = 'inline-flex';
+}
+
+function playNextInQueue() {
+  if (!speechIsActive || speechIsPaused) return;
+  if (speechQueueIndex >= speechQueue.length) {
+    speechIsActive = false;
+    resetTtsButtons();
+    return;
+  }
+
+  const item = speechQueue[speechQueueIndex];
+  const utter = new SpeechSynthesisUtterance(item.text);
+  utter.lang = 'hu-HU';
+  const voice = getHungarianVoice();
+  if (voice) utter.voice = voice;
+  const rateSelect = document.getElementById('ttsRate');
+  utter.rate = rateSelect ? parseFloat(rateSelect.value) : 1;
+
+  utter.onend = () => {
+    if (!speechIsActive || speechIsPaused) return;
+    speechQueueIndex++;
+    const gap = item.pauseAfter || 0;
+    if (gap > 0) {
+      speechGapTimer = setTimeout(() => {
+        speechGapTimer = null;
+        playNextInQueue();
+      }, gap);
+    } else {
+      playNextInQueue();
+    }
+  };
+  utter.onerror = () => {
+    if (speechRateChanging) { speechRateChanging = false; return; }
+    if (!speechIsActive || speechIsPaused) return;
+    speechQueueIndex++;
+    playNextInQueue();
+  };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function stopSpeech() {
+  speechIsActive = false;
+  speechIsPaused = false;
+  if (speechGapTimer) { clearTimeout(speechGapTimer); speechGapTimer = null; }
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  speechQueue = [];
+  speechQueueIndex = 0;
+  resetTtsButtons();
+}
+
+function resetTtsButtons() {
+  speechIsPaused = false;
+  setTtsPlayLabel('▶️ Felolvasás indítása');
+  const stopBtn = document.getElementById('ttsStopBtn');
+  if (stopBtn) stopBtn.style.display = 'none';
+}
+
+function setTtsPlayLabel(label) {
+  const playBtn = document.getElementById('ttsPlayBtn');
+  if (playBtn) playBtn.textContent = label;
+}
+
+function updateSpeechRate() {
+  if (speechIsActive && !speechIsPaused && window.speechSynthesis.speaking) {
+    if (speechGapTimer) { clearTimeout(speechGapTimer); speechGapTimer = null; }
+    speechRateChanging = true;
+    window.speechSynthesis.cancel();
+    playNextInQueue();
+  }
 }
 
 function switchTab(tab) {
