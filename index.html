@@ -715,6 +715,133 @@
     color: var(--text-light);
     margin-bottom: 0.3rem;
   }
+  /* VIZSGASZIMULÁCIÓ */
+  .vizsga-item { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .vizsga-mode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .vizsga-mode-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem 1.3rem;
+    box-shadow: var(--shadow);
+  }
+  .vizsga-mode-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .vizsga-mode-cim {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .vizsga-mode-leiras {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+  .vizsga-mode-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .vizsga-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--accent);
+    background: #fff;
+    color: var(--accent);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .vizsga-btn:hover { background: var(--tag-bg); }
+  .vizsga-btn-primary { background: var(--accent); color: #fff; }
+  .vizsga-btn-primary:hover { background: #23543f; }
+  .vizsga-btn-alt { border-color: var(--border); color: var(--text-light); }
+  .btn-ok { border-color: #2d6a4f; color: #2d6a4f; }
+  .btn-mid { border-color: var(--accent2); color: var(--accent2); }
+  .btn-no { border-color: #b3453d; color: #b3453d; }
+
+  .kviz-progress-bar {
+    height: 8px;
+    background: var(--tag-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+  .kviz-progress-fill { height: 100%; background: var(--accent); transition: width 0.25s; }
+  .kviz-progress-label { font-size: 0.82rem; color: var(--text-light); font-weight: 600; margin-bottom: 1.2rem; }
+  .kviz-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 1.6rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.2rem;
+  }
+  .kviz-tetel-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+  .kviz-question {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.1rem;
+    line-height: 1.4;
+  }
+  .kviz-answer {
+    background: var(--tag-bg);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 1.1rem;
+  }
+  .kviz-rate-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .kviz-summary-card {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 14px;
+    padding: 1.6rem;
+    text-align: center;
+    margin-bottom: 1.3rem;
+  }
+  .kviz-summary-pct { font-family: 'Fraunces', serif; font-size: 2.6rem; font-weight: 700; }
+  .kviz-summary-label { font-size: 0.9rem; opacity: 0.9; margin-top: 0.2rem; }
+  .kviz-gyenge-cim { font-weight: 700; color: var(--accent); margin: 1rem 0 0.7rem; font-size: 0.92rem; }
+
+  .timer-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    background: var(--tag-bg);
+    border-radius: 10px;
+    padding: 0.8rem 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+  .timer-display {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 3.2rem;
+  }
+
+  @media (max-width: 720px) {
+    .vizsga-mode-grid { grid-template-columns: 1fr; }
+    .kviz-summary-pct { font-size: 2rem; }
+  }
 </style>
 </head>
 <body>
@@ -1950,8 +2077,25 @@ const fejezetek = [
 let currentTetelId = 1;
 let currentTab = 'kartya';
 let flippedCards = new Set();
-let currentView = 'home'; // 'home' | 'fejezet' | 'tetel'
+let currentView = 'home'; // 'home' | 'fejezet' | 'tetel' | 'vizsga'
 let currentFejezetIdx = null;
+
+// ===================== VIZSGASZIMULÁCIÓ STATE =====================
+let vizsgaMode = null; // null | 'kviz' | 'szobeli'
+// kvíz mód
+let kvizFejezetIdx = null;
+let kvizKerdesek = [];
+let kvizIndex = 0;
+let kvizAnswered = false;
+let kvizEredmenyek = [];
+// szóbeli szimuláció mód
+let szobeliDrawnIds = [];
+let szobeliCurrentIds = [];
+let szobeliAnswered = false;
+let szobeliEredmenyek = [];
+let szobeliTimerInterval = null;
+let szobeliTimeLeft = 0;
+let szobeliFelkeszulesPerc = 10;
 
 // ===================== INIT =====================
 function init() {
@@ -1965,6 +2109,13 @@ function init() {
   homeItem.innerHTML = `<span class="num">🏠</span><span>Főoldal – fejezetek</span>`;
   homeItem.onclick = () => selectHome();
   sidebarList.appendChild(homeItem);
+
+  const vizsgaItem = document.createElement('div');
+  vizsgaItem.className = 'sidebar-item vizsga-item';
+  vizsgaItem.id = 'sidebar-vizsga';
+  vizsgaItem.innerHTML = `<span class="num">🎓</span><span>Vizsgaszimuláció</span>`;
+  vizsgaItem.onclick = () => selectVizsga();
+  sidebarList.appendChild(vizsgaItem);
 
   fejezetek.forEach((fej, fIdx) => {
     const header = document.createElement('div');
@@ -2016,6 +2167,8 @@ function onSelectChange(val) {
 function updateSidebarActive() {
   const homeEl = document.getElementById('sidebar-home');
   if (homeEl) homeEl.classList.toggle('active', currentView === 'home');
+  const vizsgaEl = document.getElementById('sidebar-vizsga');
+  if (vizsgaEl) vizsgaEl.classList.toggle('active', currentView === 'vizsga');
   fejezetek.forEach((fej, fIdx) => {
     const header = document.getElementById(`sidebar-fejezet-${fIdx}`);
     if (header) header.classList.toggle('active', currentView === 'fejezet' && currentFejezetIdx === fIdx);
@@ -2039,6 +2192,16 @@ function selectHome() {
 function selectFejezet(idx) {
   currentView = 'fejezet';
   currentFejezetIdx = idx;
+  document.getElementById('tetelSelect').value = 'home';
+  document.getElementById('nezet').disabled = true;
+  updateSidebarActive();
+  renderMain();
+  updateStats();
+}
+
+function selectVizsga() {
+  currentView = 'vizsga';
+  currentFejezetIdx = null;
   document.getElementById('tetelSelect').value = 'home';
   document.getElementById('nezet').disabled = true;
   updateSidebarActive();
@@ -2149,6 +2312,337 @@ function renderFejezetOverview(idx) {
   return html;
 }
 
+// ===================== VIZSGASZIMULÁCIÓ =====================
+let szobeliRoundRated = [];
+
+function renderVizsga() {
+  if (vizsgaMode === 'kviz') return renderKviz();
+  if (vizsgaMode === 'szobeli') return renderSzobeli();
+  return renderVizsgaMenu();
+}
+
+function renderVizsgaMenu() {
+  let html = `
+    <div class="breadcrumb">
+      <span class="breadcrumb-link" onclick="selectHome()">🏠 Főoldal</span>
+      <span class="breadcrumb-sep">›</span>
+      <span>Vizsgaszimuláció</span>
+    </div>
+    <div class="topic-header">
+      <h2>🎓 Vizsgaszimuláció</h2>
+      <div class="tetel-szoveg">Válaszd ki, hogyan szeretnéd ellenőrizni a tudásod. A pontszámok és eredmények csak ebben a böngészőmunkamenetben maradnak meg – ha újratöltöd az oldalt, nullázódnak.</div>
+    </div>
+    <div class="vizsga-mode-grid">
+      <div class="vizsga-mode-card">
+        <div class="vizsga-mode-icon">📋</div>
+        <div class="vizsga-mode-cim">Fejezetenkénti kvíz</div>
+        <div class="vizsga-mode-leiras">Kérdés-válasz formában, kártyáid alapján, gyors visszajelzéssel ellenőrzöd, mit tudsz már biztosan egy-egy fejezetből.</div>
+        <div class="vizsga-mode-btns">
+  `;
+  fejezetek.forEach((fej, idx) => {
+    html += `<button class="vizsga-btn" onclick="startKviz(${idx})">${fej.romaiSzam}. ${fej.nev}</button>`;
+  });
+  html += `
+          <button class="vizsga-btn vizsga-btn-alt" onclick="startKviz('all')">🔀 Mind a 26 tétel vegyesen</button>
+        </div>
+      </div>
+      <div class="vizsga-mode-card">
+        <div class="vizsga-mode-icon">🎤</div>
+        <div class="vizsga-mode-cim">Teljes szimulált szóbeli</div>
+        <div class="vizsga-mode-leiras">Véletlenszerűen húzol tétel(eke)t – ahogy a valódi vizsgán –, felkészülési idővel, majd hangosan elmondod, és a teljes leírással veted össze.</div>
+        <div class="vizsga-mode-btns">
+          <button class="vizsga-btn" onclick="startSzobeli(1)">🎫 1 tétel húzása</button>
+          <button class="vizsga-btn" onclick="startSzobeli(2)">🎫🎫 2 tétel húzása</button>
+          ${szobeliDrawnIds.length > 0 ? `<button class="vizsga-btn vizsga-btn-alt" onclick="resetSzobeliUles()">🔁 Húzott tételek nullázása (${szobeliDrawnIds.length}/26 már húzva)</button>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+  if (szobeliEredmenyek.length > 0) {
+    html += renderSzobeliOsszegzes();
+  }
+  return html;
+}
+
+// ---------- KVÍZ MÓD ----------
+function startKviz(fejezetIdxOrAll) {
+  kvizFejezetIdx = fejezetIdxOrAll;
+  const tetelIds = fejezetIdxOrAll === 'all'
+    ? tetelek.map(t => t.id)
+    : fejezetek[fejezetIdxOrAll].tetelIds;
+  let pool = [];
+  tetelIds.forEach(tid => {
+    const t = tetelek.find(x => x.id === tid);
+    if (t) t.kartya.forEach(kv => pool.push({ tetelId: t.id, tetelCim: t.cim, k: kv.k, v: kv.v }));
+  });
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  kvizKerdesek = pool;
+  kvizIndex = 0;
+  kvizAnswered = false;
+  kvizEredmenyek = [];
+  vizsgaMode = 'kviz';
+  renderMain();
+}
+
+function renderKviz() {
+  if (kvizKerdesek.length === 0) {
+    return `<div class="empty-state">Ehhez a fejezethez nincs elég tanulókártya.</div><button class="vizsga-btn" onclick="backToVizsgaMenu()">⬅️ Vissza</button>`;
+  }
+  if (kvizIndex >= kvizKerdesek.length) return renderKvizSummary();
+
+  const item = kvizKerdesek[kvizIndex];
+  const pct = Math.round((kvizIndex / kvizKerdesek.length) * 100);
+  const cimSzoveg = kvizFejezetIdx === 'all' ? 'Vegyes kvíz – mind a 26 tétel' : `${fejezetek[kvizFejezetIdx].romaiSzam}. ${fejezetek[kvizFejezetIdx].nev}`;
+
+  let html = `
+    <div class="breadcrumb">
+      <span class="breadcrumb-link" onclick="selectVizsga()">🎓 Vizsgaszimuláció</span>
+      <span class="breadcrumb-sep">›</span>
+      <span>Kvíz – ${cimSzoveg}</span>
+    </div>
+    <div class="kviz-progress-bar"><div class="kviz-progress-fill" style="width:${pct}%"></div></div>
+    <div class="kviz-progress-label">${kvizIndex + 1}. / ${kvizKerdesek.length} kérdés &nbsp;|&nbsp; ✅ ${kvizEredmenyek.filter(e => e.tudta).length} &nbsp;|&nbsp; ❌ ${kvizEredmenyek.filter(e => !e.tudta).length}</div>
+    <div class="kviz-card">
+      <div class="kviz-tetel-tag">${item.tetelId}. tétel – ${item.tetelCim}</div>
+      <div class="kviz-question">${item.k}</div>
+  `;
+  if (!kvizAnswered) {
+    html += `<button class="vizsga-btn vizsga-btn-primary" onclick="kvizShowAnswer()">👁️ Mutasd a választ</button>`;
+  } else {
+    html += `
+      <div class="kviz-answer">${item.v}</div>
+      <div class="kviz-rate-btns">
+        <button class="vizsga-btn btn-ok" onclick="kvizMark(true)">✅ Tudtam</button>
+        <button class="vizsga-btn btn-no" onclick="kvizMark(false)">❌ Nem tudtam</button>
+      </div>
+    `;
+  }
+  html += `</div><button class="vizsga-btn vizsga-btn-alt" onclick="backToVizsgaMenu()">⏹️ Kilépés a kvízből</button>`;
+  return html;
+}
+
+function kvizShowAnswer() { kvizAnswered = true; renderMain(); }
+
+function kvizMark(tudta) {
+  const item = kvizKerdesek[kvizIndex];
+  kvizEredmenyek.push({ ...item, tudta });
+  kvizIndex++;
+  kvizAnswered = false;
+  renderMain();
+}
+
+function renderKvizSummary() {
+  const total = kvizEredmenyek.length;
+  const jo = kvizEredmenyek.filter(e => e.tudta).length;
+  const pct = total ? Math.round((jo / total) * 100) : 0;
+  const gyenge = kvizEredmenyek.filter(e => !e.tudta);
+  let html = `
+    <div class="breadcrumb">
+      <span class="breadcrumb-link" onclick="selectVizsga()">🎓 Vizsgaszimuláció</span>
+      <span class="breadcrumb-sep">›</span>
+      <span>Kvíz eredménye</span>
+    </div>
+    <div class="kviz-summary-card">
+      <div class="kviz-summary-pct">${pct}%</div>
+      <div class="kviz-summary-label">${jo} / ${total} kártyát tudtál elsőre</div>
+    </div>
+  `;
+  if (gyenge.length > 0) {
+    html += `<div class="kviz-gyenge-cim">🔎 Ezeket érdemes még átnézni:</div><div class="fejezet-tetel-lista">`;
+    gyenge.forEach(g => {
+      html += `
+        <div class="fejezet-tetel-item" onclick="selectTetel(${g.tetelId})">
+          <div class="fejezet-tetel-top"><span class="fejezet-tetel-num">${g.tetelId}. tétel – ${g.tetelCim}</span></div>
+          <div class="fejezet-tetel-cim">${g.k}</div>
+          <div class="fejezet-tetel-szoveg">${g.v}</div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="empty-state">Ezt a kört hibátlanul tudtad! 🎉</div>`;
+  }
+  html += `
+    <div class="vizsga-mode-btns" style="margin-top:1.2rem;">
+      <button class="vizsga-btn vizsga-btn-primary" onclick="startKviz(${JSON.stringify(kvizFejezetIdx)})">🔁 Újra ez a kvíz</button>
+      <button class="vizsga-btn vizsga-btn-alt" onclick="backToVizsgaMenu()">🎓 Vissza a menübe</button>
+    </div>
+  `;
+  return html;
+}
+
+function backToVizsgaMenu() {
+  vizsgaMode = null;
+  kvizAnswered = false;
+  stopSzobeliTimer();
+  renderMain();
+}
+
+// ---------- SZÓBELI SZIMULÁCIÓ MÓD ----------
+function startSzobeli(count) {
+  vizsgaMode = 'szobeli';
+  drawSzobeliTetelek(count);
+  renderMain();
+}
+
+function drawSzobeliTetelek(count) {
+  let available = tetelek.map(t => t.id).filter(id => !szobeliDrawnIds.includes(id));
+  if (available.length < count) { szobeliDrawnIds = []; available = tetelek.map(t => t.id); }
+  const pool = [...available];
+  const chosen = [];
+  for (let i = 0; i < count && pool.length > 0; i++) {
+    const idx = Math.floor(Math.random() * pool.length);
+    chosen.push(pool[idx]);
+    pool.splice(idx, 1);
+  }
+  chosen.forEach(id => szobeliDrawnIds.push(id));
+  szobeliCurrentIds = chosen;
+  szobeliAnswered = false;
+  szobeliRoundRated = [];
+  stopSzobeliTimer();
+}
+
+function resetSzobeliUles() {
+  szobeliDrawnIds = [];
+  szobeliCurrentIds = [];
+  szobeliEredmenyek = [];
+  szobeliRoundRated = [];
+  szobeliAnswered = false;
+  stopSzobeliTimer();
+  renderMain();
+}
+
+function renderSzobeli() {
+  if (szobeliCurrentIds.length === 0) {
+    return renderVizsgaMenu();
+  }
+  const drawn = szobeliCurrentIds.map(id => tetelek.find(t => t.id === id)).filter(Boolean);
+
+  let html = `
+    <div class="breadcrumb">
+      <span class="breadcrumb-link" onclick="selectVizsga()">🎓 Vizsgaszimuláció</span>
+      <span class="breadcrumb-sep">›</span>
+      <span>Szóbeli szimuláció</span>
+    </div>
+    <div class="topic-header">
+      <h2>🎤 Húzott tétel${drawn.length > 1 ? 'ek' : ''}</h2>
+      <div class="tetel-szoveg">Készülj fel, mondd el hangosan magadnak vagy diktafonba, ahogy a vizsgán tennéd – csak utána nézd meg a választ.</div>
+    </div>
+    <div class="timer-box">
+      <span class="timer-display" id="szobeliTimerDisplay">${szobeliFelkeszulesPerc}:00</span>
+      <button class="vizsga-btn" onclick="szobeliTimerStart()">▶️ Felkészülési idő indítása (${szobeliFelkeszulesPerc} perc)</button>
+      <button class="vizsga-btn vizsga-btn-alt" onclick="stopSzobeliTimer()">⏹️ Időzítő megállítása</button>
+    </div>
+    <div class="fejezet-tetel-lista">
+  `;
+  drawn.forEach(t => {
+    html += `
+      <div class="fejezet-tetel-item" style="cursor:default;">
+        <div class="fejezet-tetel-top"><span class="fejezet-tetel-num">${t.id}. tétel</span></div>
+        <div class="fejezet-tetel-cim">${t.cim}</div>
+        <div class="fejezet-tetel-szoveg">${t.tetelSzoveg}</div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+
+  if (!szobeliAnswered) {
+    html += `<button class="vizsga-btn vizsga-btn-primary" style="margin-top:1rem;" onclick="szobeliShowAnswer()">👁️ Kész vagyok – mutasd a választ</button>`;
+  } else {
+    drawn.forEach(t => {
+      html += `<div class="topic-header" style="margin-top:1.5rem;"><h2>${t.id}. tétel – teljes válasz</h2></div>`;
+      html += renderTeljesLeiras(t);
+      if (szobeliRoundRated.includes(t.id)) {
+        html += `<div class="empty-state">Értékelve ✅</div>`;
+      } else {
+        html += `
+          <div class="kviz-rate-btns" style="margin-bottom:1.5rem;">
+            <button class="vizsga-btn btn-ok" onclick="szobeliMark(${t.id}, 'jo')">✅ Jól tudtam</button>
+            <button class="vizsga-btn btn-mid" onclick="szobeliMark(${t.id}, 'reszben')">🟡 Részben tudtam</button>
+            <button class="vizsga-btn btn-no" onclick="szobeliMark(${t.id}, 'nem')">❌ Nem tudtam</button>
+          </div>
+        `;
+      }
+    });
+    if (szobeliRoundRated.length === szobeliCurrentIds.length) {
+      html += `
+        <div class="vizsga-mode-btns">
+          <button class="vizsga-btn vizsga-btn-primary" onclick="startSzobeli(${szobeliCurrentIds.length})">🎫 Húzz újabb tétel${szobeliCurrentIds.length > 1 ? 'eke' : ''}t</button>
+          <button class="vizsga-btn vizsga-btn-alt" onclick="backToVizsgaMenu()">🎓 Vissza a menübe</button>
+        </div>
+      `;
+    }
+  }
+
+  html += renderSzobeliOsszegzes();
+  return html;
+}
+
+function szobeliShowAnswer() { szobeliAnswered = true; stopSzobeliTimer(); renderMain(); }
+
+function szobeliMark(tetelId, minosites) {
+  szobeliEredmenyek.push({ tetelId, minosites });
+  szobeliRoundRated.push(tetelId);
+  renderMain();
+}
+
+function renderSzobeliOsszegzes() {
+  if (szobeliEredmenyek.length === 0) return '';
+  const jo = szobeliEredmenyek.filter(e => e.minosites === 'jo').length;
+  const reszben = szobeliEredmenyek.filter(e => e.minosites === 'reszben').length;
+  const nem = szobeliEredmenyek.filter(e => e.minosites === 'nem').length;
+  const gyengek = szobeliEredmenyek.filter(e => e.minosites !== 'jo');
+  let html = `
+    <div class="topic-header" style="margin-top:2rem;">
+      <h2>📊 Eddigi szóbeli ülés</h2>
+      <div class="tetel-szoveg">✅ Jó: ${jo} &nbsp;|&nbsp; 🟡 Részben: ${reszben} &nbsp;|&nbsp; ❌ Nem: ${nem} &nbsp;|&nbsp; Húzva összesen: ${szobeliDrawnIds.length}/26</div>
+    </div>
+  `;
+  if (gyengek.length > 0) {
+    const egyediGyengek = [...new Map(gyengek.map(g => [g.tetelId, g])).values()];
+    html += `<div class="kviz-gyenge-cim">🔎 Ezeket a tételeket érdemes még gyakorolni:</div><div class="fejezet-tetel-lista">`;
+    egyediGyengek.forEach(g => {
+      const t = tetelek.find(x => x.id === g.tetelId);
+      if (!t) return;
+      const badge = g.minosites === 'reszben' ? '🟡 Részben tudtam' : '❌ Nem tudtam';
+      html += `
+        <div class="fejezet-tetel-item" onclick="selectTetel(${t.id})">
+          <div class="fejezet-tetel-top"><span class="fejezet-tetel-num">${t.id}. tétel</span><span class="fejezet-tetel-meta">${badge}</span></div>
+          <div class="fejezet-tetel-cim">${t.cim}</div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+  return html;
+}
+
+function szobeliTimerStart() {
+  szobeliTimeLeft = szobeliFelkeszulesPerc * 60;
+  stopSzobeliTimer();
+  updateSzobeliTimerDisplay();
+  szobeliTimerInterval = setInterval(() => {
+    szobeliTimeLeft--;
+    updateSzobeliTimerDisplay();
+    if (szobeliTimeLeft <= 0) stopSzobeliTimer();
+  }, 1000);
+}
+
+function stopSzobeliTimer() {
+  if (szobeliTimerInterval) { clearInterval(szobeliTimerInterval); szobeliTimerInterval = null; }
+}
+
+function updateSzobeliTimerDisplay() {
+  const el = document.getElementById('szobeliTimerDisplay');
+  if (!el) return;
+  const m = Math.floor(Math.max(szobeliTimeLeft, 0) / 60);
+  const s = Math.max(szobeliTimeLeft, 0) % 60;
+  el.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+}
+
 // ===================== TÉTEL RÉSZLETES NÉZET =====================
 function renderMain() {
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -2160,6 +2654,10 @@ function renderMain() {
   }
   if (currentView === 'fejezet') {
     main.innerHTML = renderFejezetOverview(currentFejezetIdx);
+    return;
+  }
+  if (currentView === 'vizsga') {
+    main.innerHTML = renderVizsga();
     return;
   }
 
